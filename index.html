@@ -9,148 +9,56 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{
-  font-family:Poppins;
-  background:#F9F6F1;
-  overflow-x:hidden;
-}
+body{font-family:Poppins;background:#F5F7FA;color:#111;}
 
 /* HEADER */
 header{
-  background:#0A2540;
+  background:#0B1F3A;
   color:white;
-  padding:15px 40px;
+  padding:15px 30px;
   display:flex;
   justify-content:space-between;
   position:fixed;
   width:100%;
-  top:0;
   z-index:1000;
-  border-bottom:3px solid #C8A96A;
+  border-bottom:3px solid #D4AF37;
 }
-
 nav a{
   color:white;
-  margin:0 15px;
+  margin:0 10px;
   text-decoration:none;
 }
 
 /* HERO */
 .hero{
   height:100vh;
-  position:relative;
+  background:url('https://images.unsplash.com/photo-1561488111-3d7b3e9dcb16') center/cover;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
   color:white;
-  overflow:hidden;
+  position:relative;
 }
-
-/* BACKGROUND */
-.hero::before{
-  content:"";
-  position:absolute;
-  width:200%;
-  height:100%;
-  background:url('https://images.unsplash.com/photo-1561488111-3d7b3e9dcb16');
-  background-size:cover;
-  animation:moveBg 60s linear infinite;
-  opacity:0.35;
-  z-index:-3;
-}
-
 .hero::after{
   content:"";
   position:absolute;
   width:100%;
   height:100%;
-  background:url('https://upload.wikimedia.org/wikipedia/commons/e/e3/Kheops-Pyramid.jpg');
-  background-size:cover;
-  opacity:0.15;
-  z-index:-2;
+  background:rgba(11,31,58,0.75);
 }
+.hero *{z-index:1;}
 
-/* ROUTE LINE */
-.route{
-  position:absolute;
-  width:300px;
-  height:2px;
-  background:gold;
-  top:60%;
-  left:20%;
-}
-
-/* MOVING DOT */
-.dot{
-  position:absolute;
-  width:12px;
-  height:12px;
-  background:#C8A96A;
-  border-radius:50%;
-  animation:moveDot 6s linear infinite;
-}
-
-/* MAP TRACKING DOT */
-.map-dot{
-  position:absolute;
-  width:14px;
-  height:14px;
-  background:red;
-  border-radius:50%;
-  top:50%;
-  left:40%;
-  animation:zoomPulse 2s infinite;
-}
-
-/* ANIMATIONS */
-@keyframes moveBg{
-  from{transform:translateX(0);}
-  to{transform:translateX(-30%);}
-}
-
-@keyframes moveDot{
-  0%{left:20%;top:60%;}
-  100%{left:60%;top:45%;}
-}
-
-/* ZOOM EFFECT */
-@keyframes zoomPulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.8);}
-  100%{transform:scale(1);}
-}
-
-/* BUTTON */
-.btn{
-  background:#C8A96A;
-  color:#0A2540;
+button{
   padding:10px 20px;
+  background:#D4AF37;
   border:none;
   cursor:pointer;
-  margin-top:10px;
 }
 
-/* SECTIONS */
-section{
-  padding:100px 40px;
-  text-align:center;
-}
-
-.services{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-.card{
-  padding:20px;
-  width:220px;
-  background:white;
-  border-radius:10px;
-}
+/* SECTION */
+section{padding:100px 30px;text-align:center;}
 
 /* DASHBOARD */
 .dashboard{
@@ -159,18 +67,77 @@ section{
   justify-content:center;
   flex-wrap:wrap;
 }
-.box{
+.card{
+  background:white;
   padding:20px;
-  background:#C8A96A;
+  width:220px;
   border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+.card h3{color:#0B1F3A;}
+.card p{color:#D4AF37;font-size:20px;font-weight:bold;}
+
+/* COUNTRIES */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:10px;
+}
+.country{
+  background:white;
+  padding:10px;
+  border-radius:6px;
+  cursor:pointer;
+}
+.country:hover{
+  background:#D4AF37;
+  color:#0B1F3A;
+}
+
+/* INFO */
+#info{
+  margin-top:20px;
+  background:white;
+  padding:15px;
+  border-radius:6px;
 }
 
 /* MAP */
 .map{
   position:relative;
-  height:300px;
-  background:url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
-  background-size:cover;
+  width:100%;
+  height:400px;
+}
+
+/* SVG ROUTE */
+svg{
+  width:100%;
+  height:100%;
+}
+
+/* ROUTE LINE */
+.path{
+  fill:none;
+  stroke:#D4AF37;
+  stroke-width:2;
+  stroke-dasharray:300;
+  stroke-dashoffset:300;
+  animation:draw 5s linear infinite;
+}
+
+/* MOVING DOT */
+.dot{
+  fill:red;
+  animation:moveDot 5s linear infinite;
+}
+
+@keyframes draw{
+  to{stroke-dashoffset:0;}
+}
+
+@keyframes moveDot{
+  0%{offset-distance:0%;}
+  100%{offset-distance:100%;}
 }
 
 /* WATERMARK */
@@ -178,15 +145,8 @@ section{
   position:fixed;
   bottom:10%;
   right:5%;
-  width:200px;
-  opacity:0.08;
-  z-index:-1;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-  header{flex-direction:column;}
-  .services,.dashboard{flex-direction:column;}
+  width:150px;
+  opacity:0.05;
 }
 </style>
 </head>
@@ -196,103 +156,105 @@ section{
 <img class="watermark" src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Tutankhamun_Mask.jpg">
 
 <header>
-  <h3>Smart Supply Chain</h3>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#services">Services</a>
-    <a href="#dashboard">Dashboard</a>
-    <a href="#map">Global</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<h3>Smart Supply Chain</h3>
+<nav>
+<a href="#home">Home</a>
+<a href="#dashboard">Dashboard</a>
+<a href="#countries">Countries</a>
+<a href="#map">Map</a>
+</nav>
 </header>
 
 <!-- HERO -->
 <section id="home" class="hero">
-  <div class="route"></div>
-  <div class="dot"></div>
+<h1>Egyptian Heritage Logistics</h1>
+<p>Connecting Egypt to the world</p>
 
-  <h1>Egyptian Heritage Logistics</h1>
-  <p>From Egypt to Europe and the world</p>
+<input id="track" placeholder="Tracking Number">
+<br><br>
+<button onclick="track()">Track</button>
 
-  <input id="track" placeholder="Tracking Number">
-  <button class="btn" onclick="track()">Track</button>
-
-  <div id="result"></div>
-</section>
-
-<!-- SERVICES -->
-<section id="services">
-  <h2>Services</h2>
-  <div class="services">
-    <div class="card">🚚 Shipping</div>
-    <div class="card">🏬 Warehousing</div>
-    <div class="card">🛒 E-commerce</div>
-  </div>
+<div id="result"></div>
 </section>
 
 <!-- DASHBOARD -->
 <section id="dashboard">
-  <h2>Dashboard</h2>
-  <div class="dashboard">
-    <div class="box">1200 Deliveries</div>
-    <div class="box">50 Warehouses</div>
-    <div class="box">30 Countries</div>
-  </div>
+<h2>Operations Dashboard</h2>
+<div class="dashboard">
+<div class="card"><h3>Deliveries</h3><p>1200+</p></div>
+<div class="card"><h3>Warehouses</h3><p>50</p></div>
+<div class="card"><h3>Countries</h3><p>30+</p></div>
+<div class="card"><h3>Fleet</h3><p>320</p></div>
+</div>
+</section>
+
+<!-- COUNTRIES -->
+<section id="countries">
+<h2>Countries</h2>
+
+<div class="grid">
+<div class="country" onclick="show('Egypt')">🇪🇬 Egypt</div>
+<div class="country" onclick="show('France')">🇫🇷 France</div>
+<div class="country" onclick="show('Italy')">🇮🇹 Italy</div>
+<div class="country" onclick="show('Canada')">🇨🇦 Canada</div>
+<div class="country" onclick="show('Germany')">🇩🇪 Germany</div>
+<div class="country" onclick="show('UAE')">🇦🇪 UAE</div>
+<div class="country" onclick="show('China')">🇨🇳 China</div>
+<div class="country" onclick="show('India')">🇮🇳 India</div>
+</div>
+
+<div id="info">Click a country</div>
 </section>
 
 <!-- MAP -->
 <section id="map">
-  <h2>Global Network</h2>
-  <div class="map">
-    <div class="map-dot"></div>
-  </div>
-</section>
+<h2>Global Routes</h2>
 
-<!-- CONTACT -->
-<section id="contact">
-  <h2>Contact</h2>
-  <input placeholder="Email"><br><br>
-  <textarea placeholder="Message"></textarea><br>
-  <button class="btn">Send</button>
-</section>
+<div class="map">
+<svg viewBox="0 0 800 400">
 
-<footer style="text-align:center;padding:20px;">
-© 2026 Smart Supply Chain
-</footer>
+<!-- Egypt to France -->
+<path class="path" d="M300 250 Q400 200 500 180"/>
+
+<!-- Moving dot -->
+<circle r="5" class="dot">
+  <animateMotion dur="5s" repeatCount="indefinite">
+    <mpath href="#route1"/>
+  </animateMotion>
+</circle>
+
+</svg>
+</div>
+
+</section>
 
 <script>
+/* TRACKING */
 const shipments={
-  "9885":{
-    from:"Italy",
-    to:"Canada",
-    timeline:["Italy","Mediterranean","Atlantic","Canada","Out for delivery"],
-    days:3
-  },
-  "1234":{
-    from:"Egypt",
-    to:"France",
-    timeline:["Cairo","Airport","Flight","Paris","Delivered"],
-    days:5
-  }
+"9885":"Italy → Canada (3 days remaining)",
+"1234":"Egypt → France (5 days remaining)"
 };
 
 function track(){
-  let id=document.getElementById("track").value;
-  let r=document.getElementById("result");
+let id=document.getElementById("track").value;
+let r=document.getElementById("result");
+r.innerHTML=shipments[id]||"Not found";
+}
 
-  if(shipments[id]){
-    let s=shipments[id];
-    let step=Math.floor(Date.now()/5000)%s.timeline.length;
+/* COUNTRY DATA */
+const data={
+Egypt:"Main hub in Cairo",
+France:"European distribution",
+Italy:"Shipping hub",
+Canada:"Delivery network",
+Germany:"Logistics hub",
+UAE:"Middle East operations",
+China:"Manufacturing",
+India:"Regional hub"
+};
 
-    r.innerHTML=`
-    📦 ${id}<br>
-    🌍 ${s.from} → ${s.to}<br>
-    📍 ${s.timeline[step]}<br>
-    ⏳ ${s.days} days remaining
-    `;
-  } else {
-    r.innerHTML="❌ Tracking not found";
-  }
+function show(c){
+document.getElementById("info").innerHTML=data[c];
 }
 </script>
 
