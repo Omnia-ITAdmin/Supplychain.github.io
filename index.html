@@ -26,41 +26,34 @@ header{
 nav a{
   color:white;
   margin:0 10px;
-  text-decoration:none;
   cursor:pointer;
+  text-decoration:none;
 }
 
-/* HERO SLIDER */
+/* HERO */
 .hero{
   height:100vh;
   position:relative;
   overflow:hidden;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   text-align:center;
   color:white;
 }
 
+/* SLIDES */
 .slide{
   position:absolute;
   width:100%;
   height:100%;
   background-size:cover;
   background-position:center;
-  animation:fade 18s infinite;
+  opacity:0;
+  transition:opacity 1s;
 }
 
-.slide:nth-child(1){background:url('https://images.unsplash.com/photo-1572252009286-268acec5ca0a');}
-.slide:nth-child(2){background:url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Tutankhamun_Mask.jpg');}
-.slide:nth-child(3){background:url('https://images.unsplash.com/photo-1590005354167-6da97870c757');}
-
-@keyframes fade{
-  0%{opacity:1;}
-  33%{opacity:0;}
-  66%{opacity:0;}
-  100%{opacity:1;}
-}
+.slide.active{opacity:1;}
 
 .overlay{
   position:absolute;
@@ -85,9 +78,28 @@ button{
 .section{
   display:none;
   padding:100px 30px;
-  text-align:center;
+  margin-top:70px;
 }
 .active{display:block;}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:15px;
+}
+
+.country{
+  background:white;
+  padding:15px;
+  border-radius:8px;
+  text-align:center;
+  cursor:pointer;
+}
+.country:hover{
+  background:#D4AF37;
+  color:#0B1F3A;
+}
 
 /* TABLE */
 table{
@@ -95,33 +107,21 @@ table{
   border-collapse:collapse;
   margin-top:20px;
 }
-td,th{
-  border:1px solid #ccc;
+th,td{
   padding:10px;
+  border:1px solid #ccc;
+  text-align:center;
 }
 
 /* CARD */
 .card{
   background:white;
-  padding:15px;
-  margin:10px;
-  border-radius:8px;
+  padding:20px;
+  margin:15px auto;
+  max-width:400px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
-
-/* COUNTRIES GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:10px;
-}
-
-.country{
-  background:white;
-  padding:10px;
-  border-radius:6px;
-  cursor:pointer;
-}
-.country:hover{background:#D4AF37;color:#0B1F3A;}
 </style>
 </head>
 
@@ -140,9 +140,9 @@ td,th{
 <!-- HOME -->
 <section id="home" class="hero active">
 
-<div class="slide"></div>
-<div class="slide"></div>
-<div class="slide"></div>
+<div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1572252009286-268acec5ca0a')"></div>
+<div class="slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Tutankhamun_Mask.jpg')"></div>
+<div class="slide" style="background-image:url('https://images.unsplash.com/photo-1590005354167-6da97870c757')"></div>
 
 <div class="overlay"></div>
 
@@ -173,7 +173,6 @@ td,th{
 <div class="country">🇨🇳 China</div>
 <div class="country">🇮🇳 India</div>
 </div>
-
 </section>
 
 <!-- SHIPPING -->
@@ -181,17 +180,10 @@ td,th{
 <h2>Shipping Methods</h2>
 
 <table>
-<tr>
-<th>Country</th>
-<th>Airplane</th>
-<th>Ship</th>
-<th>Company</th>
-</tr>
-
+<tr><th>Route</th><th>Air</th><th>Sea</th><th>Company</th></tr>
 <tr><td>Egypt → France</td><td>5 days</td><td>12 days</td><td>CGM</td></tr>
 <tr><td>Italy → Canada</td><td>7 days</td><td>15 days</td><td>CMM</td></tr>
 <tr><td>China → UAE</td><td>4 days</td><td>10 days</td><td>CGM</td></tr>
-
 </table>
 
 </section>
@@ -202,12 +194,12 @@ td,th{
 
 <div class="card">
 <h3>Egypt</h3>
-<p>Near Cairo Airport + City Center</p>
+<p>Cairo Airport + City Center Warehouse</p>
 </div>
 
 <div class="card">
 <h3>France</h3>
-<p>Near Paris Airport + Central Hub</p>
+<p>Paris Airport + Central Hub</p>
 </div>
 
 <div class="card">
@@ -219,8 +211,14 @@ td,th{
 
 <script>
 function showPage(page){
-  document.querySelectorAll('.section, .hero').forEach(s=>s.classList.remove('active'));
-  document.getElementById(page).classList.add('active');
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelector('.hero').classList.remove('active');
+
+  if(page==="home"){
+    document.querySelector('.hero').classList.add('active');
+  } else {
+    document.getElementById(page).classList.add('active');
+  }
 }
 
 /* TRACKING */
@@ -234,6 +232,16 @@ let id=document.getElementById("track").value;
 let r=document.getElementById("result");
 r.innerHTML=shipments[id]||"Not found";
 }
+
+/* SLIDER */
+let slides=document.querySelectorAll(".slide");
+let index=0;
+
+setInterval(()=>{
+  slides[index].classList.remove("active");
+  index=(index+1)%slides.length;
+  slides[index].classList.add("active");
+},4000);
 </script>
 
 </body>
