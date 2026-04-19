@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Supply Chain Solutions</title>
+<title>Smart Supply Chain</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -11,7 +11,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:Poppins;background:#F9F6F1;color:#111;}
+body{
+  font-family:Poppins;
+  background:#F9F6F1;
+  background-image:url('https://www.transparenttextures.com/patterns/egyptian.png');
+}
 
 /* HEADER */
 header{
@@ -31,22 +35,13 @@ nav a{
   color:white;
   margin:0 15px;
   text-decoration:none;
-  font-weight:500;
 }
 
-/* DROPDOWN */
-.dropdown{position:relative;display:inline-block;}
+.dropdown{position:relative;}
 .dropdown-content{
   display:none;
   position:absolute;
   background:white;
-  min-width:160px;
-  box-shadow:0 5px 10px rgba(0,0,0,0.2);
-}
-.dropdown-content a{
-  display:block;
-  padding:10px;
-  color:#0A2540;
 }
 .dropdown:hover .dropdown-content{display:block;}
 
@@ -61,80 +56,42 @@ nav a{
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  text-align:center;
 }
 
-.hero h1{font-size:48px;}
-.hero span{color:#C8A96A;}
-
+input{padding:10px;width:250px;}
 .btn{
   background:#C8A96A;
-  color:#0A2540;
   padding:10px 20px;
   border:none;
-  margin-top:10px;
   cursor:pointer;
-  font-weight:bold;
 }
 
 /* SECTIONS */
-section{
-  padding:100px 40px;
-  text-align:center;
-}
+section{padding:100px 40px;text-align:center;}
 
-.services{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
+.services{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
 .card{
-  padding:25px;
-  width:230px;
+  padding:20px;
+  width:220px;
   background:white;
   border-radius:10px;
-  border-top:4px solid #C8A96A;
-  box-shadow:0 5px 20px rgba(0,0,0,0.1);
 }
 
 /* DASHBOARD */
-.dashboard{
-  display:flex;
-  justify-content:center;
-  gap:30px;
-  flex-wrap:wrap;
-}
-.box{
-  padding:20px;
-  background:#C8A96A;
-  color:#0A2540;
-  border-radius:10px;
-  font-weight:bold;
+.dashboard{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
+.box{padding:20px;background:#C8A96A;border-radius:10px;}
+
+/* MAP */
+.map{
+  height:300px;
+  background:url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
+  background-size:cover;
 }
 
-/* DARK */
-.dark{
-  background:#0A2540;
-  color:white;
-}
-
-/* CONTACT */
-input, textarea{
-  padding:10px;
-  width:260px;
-  margin:10px;
-  border-radius:5px;
-  border:1px solid #ccc;
-}
-
-/* FOOTER */
-footer{
-  background:#0A2540;
-  color:white;
-  text-align:center;
-  padding:20px;
-  border-top:3px solid #C8A96A;
+/* MOBILE */
+@media(max-width:768px){
+  header{flex-direction:column;}
+  .services,.dashboard{flex-direction:column;}
 }
 </style>
 </head>
@@ -145,16 +102,7 @@ footer{
   <h3>Smart Supply Chain</h3>
   <nav>
     <a href="#home">Home</a>
-
-    <div class="dropdown">
-      <a href="#">Services ▼</a>
-      <div class="dropdown-content">
-        <a href="#shipping">Shipping</a>
-        <a href="#warehouse">Warehousing</a>
-        <a href="#ecommerce">E-commerce</a>
-      </div>
-    </div>
-
+    <a href="#services">Services</a>
     <a href="#dashboard">Dashboard</a>
     <a href="#map">Global</a>
     <a href="#contact">Contact</a>
@@ -162,81 +110,102 @@ footer{
 </header>
 
 <!-- HERO -->
-<section id="home" class="hero" data-aos="fade-in">
-  <h1><span>Egyptian Heritage</span> Meets Modern Logistics</h1>
-  <p>Connecting Egypt to the world through smart supply chains</p>
+<section id="home" class="hero">
+  <h1>Egyptian Heritage Logistics</h1>
+  <p>Global Smart Supply Chain</p>
 
-  <input id="track" placeholder="Tracking Number">
-  <button class="btn" onclick="track()">Track Shipment</button>
+  <input id="track" placeholder="Enter Tracking Number">
+  <button class="btn" onclick="track()">Track</button>
 
   <div id="result"></div>
 </section>
 
 <!-- SERVICES -->
-<section data-aos="fade-up">
-  <h2>Our Services</h2>
+<section id="services">
+  <h2>Services</h2>
   <div class="services">
-    <div class="card" data-aos="zoom-in">🚚 Global Shipping</div>
-    <div class="card" data-aos="zoom-in">🏬 Smart Warehousing</div>
-    <div class="card" data-aos="zoom-in">🛒 E-commerce Logistics</div>
+    <div class="card">🚚 Shipping</div>
+    <div class="card">🏬 Warehousing</div>
+    <div class="card">🛒 E-commerce</div>
   </div>
 </section>
 
-<!-- SUB SECTIONS -->
-<section id="shipping">
-  <h2>Shipping</h2>
-  <p>Fast transportation across continents.</p>
-</section>
-
-<section id="warehouse">
-  <h2>Warehousing</h2>
-  <p>Secure storage and inventory management.</p>
-</section>
-
-<section id="ecommerce">
-  <h2>E-commerce</h2>
-  <p>Efficient order processing and delivery.</p>
-</section>
-
 <!-- DASHBOARD -->
-<section id="dashboard" data-aos="fade-up">
-  <h2>Logistics Dashboard</h2>
+<section id="dashboard">
+  <h2>Dashboard</h2>
   <div class="dashboard">
-    <div class="box">1200+ Deliveries</div>
+    <div class="box">1200 Deliveries</div>
     <div class="box">50 Warehouses</div>
     <div class="box">30 Countries</div>
   </div>
 </section>
 
 <!-- MAP -->
-<section id="map" class="dark" data-aos="fade-up">
+<section id="map">
   <h2>Global Network</h2>
-  <p>From Egypt to the world</p>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" width="80%">
+  <div class="map"></div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" data-aos="fade-up">
-  <h2>Contact Us</h2>
-  <input placeholder="Email"><br>
+<section id="contact">
+  <h2>Contact</h2>
+  <input placeholder="Email"><br><br>
   <textarea placeholder="Message"></textarea><br>
   <button class="btn">Send</button>
 </section>
 
-<footer>
-© 2026 Smart Supply Chain — Inspired by Egyptian Heritage
+<footer style="text-align:center;padding:20px;">
+© 2026 Smart Supply Chain
 </footer>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-AOS.init();
+/* INDUSTRY-LIKE TRACKING SIMULATION */
+
+const shipments = {
+  "9885": {
+    from:"Italy",
+    to:"Canada",
+    timeline:[
+      "📦 Package received in Italy",
+      "🚢 Shipping across Mediterranean",
+      "🌊 Crossing Atlantic Ocean",
+      "🚚 Arrived in Canada hub",
+      "📦 Out for delivery"
+    ],
+    days:3
+  },
+  "1234": {
+    from:"Egypt",
+    to:"France",
+    timeline:[
+      "📦 Package received in Cairo",
+      "✈️ Departed Cairo Airport",
+      "🛫 Flying over Mediterranean",
+      "🇫🇷 Arrived in Paris",
+      "🚚 Out for delivery"
+    ],
+    days:5
+  }
+};
 
 function track(){
   let id=document.getElementById("track").value;
-  if(id==="123"){
-    document.getElementById("result").innerHTML="🚚 Shipment is on the way";
-  }else{
-    document.getElementById("result").innerHTML="❌ Tracking not found";
+  let result=document.getElementById("result");
+
+  if(shipments[id]){
+    let s=shipments[id];
+
+    let step=Math.min(Math.floor(Date.now()/5000)%s.timeline.length,s.timeline.length-1);
+
+    result.innerHTML=`
+    <br>
+    📦 Tracking: ${id}<br>
+    🌍 ${s.from} → ${s.to}<br>
+    📍 Status: ${s.timeline[step]}<br>
+    ⏳ ${s.days} days remaining
+    `;
+  } else {
+    result.innerHTML="❌ Tracking not found";
   }
 }
 </script>
