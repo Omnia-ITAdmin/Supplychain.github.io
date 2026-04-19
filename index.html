@@ -17,16 +17,23 @@ header{
   width:100%;
   background:#0B1F3A;
   color:white;
-  padding:18px 60px;
+  padding:15px 50px;
   display:flex;
   justify-content:space-between;
+  align-items:center;
   z-index:1000;
-  border-bottom:2px solid #D4AF37;
+  border-bottom:3px solid #D4AF37;
 }
 nav a{
-  margin-left:25px;
+  margin-left:20px;
   cursor:pointer;
-  font-weight:500;
+}
+
+/* LOGO */
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 /* HERO */
@@ -34,7 +41,7 @@ nav a{
   height:100vh;
   display:flex;
   align-items:center;
-  padding:0 80px;
+  padding:0 60px;
   color:white;
   position:relative;
 
@@ -43,10 +50,9 @@ nav a{
   url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7');
 
   background-size:cover;
-  background-position:center;
 }
 
-/* subtle egypt touch */
+/* Egyptian touch */
 .hero::after{
   content:"";
   position:absolute;
@@ -58,39 +64,26 @@ nav a{
 .hero-content{
   position:relative;
   z-index:2;
-  max-width:600px;
 }
 
 .hero h1{
-  font-size:60px;
-  font-weight:700;
-  line-height:1.2;
+  font-size:55px;
 }
 .hero p{
-  margin:25px 0;
-  font-size:18px;
-  opacity:0.9;
+  margin:20px 0;
 }
 
-/* INPUT */
-input{
-  padding:14px;
-  width:260px;
-  border:none;
-  border-radius:5px;
-}
-.btn{
-  padding:14px 28px;
+/* BUTTON */
+button{
+  padding:12px 25px;
   background:#D4AF37;
   border:none;
   cursor:pointer;
-  font-weight:bold;
-  border-radius:5px;
 }
 
 /* SECTION */
 .section{
-  padding:100px 80px;
+  padding:100px 60px;
   text-align:center;
 }
 
@@ -98,27 +91,23 @@ input{
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:25px;
-  margin-top:40px;
+  gap:20px;
+  margin-top:30px;
 }
 
 .card{
   background:white;
-  padding:35px;
-  border-radius:12px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.1);
-  transition:0.3s;
-}
-.card:hover{
-  transform:translateY(-10px);
+  padding:30px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
 /* FOOTER */
 footer{
   background:#0B1F3A;
   color:white;
-  text-align:center;
   padding:30px;
+  text-align:center;
 }
 </style>
 </head>
@@ -126,22 +115,40 @@ footer{
 <body>
 
 <header>
+
+<!-- LOGO -->
+<div class="logo">
+
+<svg width="40" height="40" viewBox="0 0 100 100">
+  <!-- Lotus -->
+  <path d="M50 10 L65 40 L50 30 L35 40 Z" fill="#D4AF37"/>
+  <path d="M20 50 Q50 10 80 50 Q50 35 20 50 Z" fill="#CFAE3B"/>
+  
+  <!-- Scarab -->
+  <ellipse cx="50" cy="65" rx="10" ry="15" fill="#0B1F3A"/>
+  <ellipse cx="40" cy="65" rx="5" ry="10" fill="#1E3A5F"/>
+  <ellipse cx="60" cy="65" rx="5" ry="10" fill="#1E3A5F"/>
+</svg>
+
 <h3>Smart Supply Chain</h3>
+</div>
+
 <nav>
 <a>Home</a>
 <a>Solutions</a>
 <a>Contact</a>
 </nav>
+
 </header>
 
 <!-- HERO -->
 <section class="hero">
 <div class="hero-content">
 <h1>Global Supply Chain Excellence</h1>
-<p>Connecting Egypt to the world with modern logistics solutions</p>
+<p>Connecting Egypt to the world with advanced logistics</p>
 
-<input id="track" placeholder="Enter Tracking Number">
-<button class="btn" onclick="track()">Track</button>
+<input id="track" placeholder="Tracking Number">
+<button onclick="track()">Track</button>
 
 <div id="result"></div>
 </div>
@@ -156,6 +163,30 @@ footer{
 <div class="card">✈️ Air Freight</div>
 <div class="card">🏬 Warehousing</div>
 <div class="card">📦 E-commerce</div>
+</div>
+</section>
+
+<!-- LOGO DESCRIPTION -->
+<section class="section">
+<h2>Our Identity</h2>
+
+<div class="card" style="max-width:700px;margin:auto;">
+
+<p>
+Our logo is inspired by ancient Egyptian heritage, combining the <b>Lotus Flower</b> 
+symbolizing growth and renewal, with the <b>Scarab</b> representing transformation, 
+strength, and continuity.
+</p>
+
+<p style="margin-top:15px;">
+The gold color reflects value and excellence, while the deep blue represents trust, 
+technology, and global connectivity.
+</p>
+
+<p style="margin-top:15px;">
+This identity connects Egypt’s historical legacy with modern global logistics innovation.
+</p>
+
 </div>
 </section>
 
