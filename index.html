@@ -9,13 +9,13 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:Poppins;background:#F5F7FA;color:#111;}
+body{font-family:Poppins;background:#f5f7fa;color:#111;}
 
 /* HEADER */
 header{
   background:#0B1F3A;
   color:white;
-  padding:15px 30px;
+  padding:15px 40px;
   display:flex;
   justify-content:space-between;
   position:fixed;
@@ -25,24 +25,23 @@ header{
 }
 nav a{
   color:white;
-  margin:0 10px;
+  margin-left:20px;
   cursor:pointer;
   text-decoration:none;
 }
 
 /* HERO */
 .hero{
-  height:100vh;
+  height:90vh;
   position:relative;
-  overflow:hidden;
   display:flex;
   align-items:center;
-  justify-content:center;
-  text-align:center;
+  padding:0 50px;
   color:white;
+  overflow:hidden;
 }
 
-/* SLIDES */
+/* SLIDER */
 .slide{
   position:absolute;
   width:100%;
@@ -50,62 +49,60 @@ nav a{
   background-size:cover;
   background-position:center;
   opacity:0;
-  transition:opacity 1s;
+  transition:1s;
 }
-
 .slide.active{opacity:1;}
 
 .overlay{
   position:absolute;
   width:100%;
   height:100%;
-  background:rgba(11,31,58,0.7);
+  background:rgba(11,31,58,0.75);
 }
 
 .hero-content{
   position:relative;
   z-index:2;
+  max-width:600px;
 }
 
-button{
-  padding:10px 20px;
+.hero h1{font-size:42px;}
+.hero input{
+  padding:10px;
+  width:250px;
+}
+.btn{
   background:#D4AF37;
+  padding:10px 20px;
   border:none;
   cursor:pointer;
 }
 
-/* SECTIONS */
+/* SECTION */
 .section{
   display:none;
-  padding:100px 30px;
-  margin-top:70px;
+  padding:100px 50px;
 }
 .active{display:block;}
 
-/* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
 }
 
-.country{
+.card{
   background:white;
-  padding:15px;
-  border-radius:8px;
-  text-align:center;
-  cursor:pointer;
-}
-.country:hover{
-  background:#D4AF37;
-  color:#0B1F3A;
+  padding:25px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
 /* TABLE */
 table{
   width:100%;
-  border-collapse:collapse;
   margin-top:20px;
+  border-collapse:collapse;
 }
 th,td{
   padding:10px;
@@ -113,24 +110,26 @@ th,td{
   text-align:center;
 }
 
-/* CARD */
-.card{
-  background:white;
-  padding:20px;
-  margin:15px auto;
-  max-width:400px;
-  border-radius:10px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+/* WATERMARK */
+.watermark{
+  position:fixed;
+  bottom:10%;
+  right:5%;
+  width:150px;
+  opacity:0.05;
 }
 </style>
 </head>
 
 <body>
 
+<img class="watermark" src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Tutankhamun_Mask.jpg">
+
 <header>
 <h3>Smart Supply Chain</h3>
 <nav>
 <a onclick="showPage('home')">Home</a>
+<a onclick="showPage('solutions')">Solutions</a>
 <a onclick="showPage('countries')">Countries</a>
 <a onclick="showPage('shipping')">Shipping</a>
 <a onclick="showPage('warehousing')">Warehousing</a>
@@ -147,16 +146,27 @@ th,td{
 <div class="overlay"></div>
 
 <div class="hero-content">
-<h1>Egyptian Heritage Logistics</h1>
-<p>Connecting Egypt to the world</p>
+<h1>Egyptian Supply Chain Solutions for a Global Market</h1>
+<p>Inspired by ancient trade. Powered by modern logistics.</p>
 
 <input id="track" placeholder="Tracking Number">
 <br><br>
-<button onclick="track()">Track</button>
+<button class="btn" onclick="track()">Track Shipment</button>
 
 <div id="result"></div>
 </div>
 
+</section>
+
+<!-- SOLUTIONS -->
+<section id="solutions" class="section">
+<h2>Our Solutions</h2>
+
+<div class="grid">
+<div class="card">🚚 Transportation (Air & Sea)</div>
+<div class="card">🏬 Warehousing (Near Airports)</div>
+<div class="card">🛒 E-commerce Logistics</div>
+</div>
 </section>
 
 <!-- COUNTRIES -->
@@ -164,14 +174,14 @@ th,td{
 <h2>Countries</h2>
 
 <div class="grid">
-<div class="country">🇪🇬 Egypt</div>
-<div class="country">🇫🇷 France</div>
-<div class="country">🇮🇹 Italy</div>
-<div class="country">🇨🇦 Canada</div>
-<div class="country">🇩🇪 Germany</div>
-<div class="country">🇦🇪 UAE</div>
-<div class="country">🇨🇳 China</div>
-<div class="country">🇮🇳 India</div>
+<div class="card">🇪🇬 Egypt</div>
+<div class="card">🇫🇷 France</div>
+<div class="card">🇮🇹 Italy</div>
+<div class="card">🇨🇦 Canada</div>
+<div class="card">🇩🇪 Germany</div>
+<div class="card">🇦🇪 UAE</div>
+<div class="card">🇨🇳 China</div>
+<div class="card">🇮🇳 India</div>
 </div>
 </section>
 
@@ -194,7 +204,7 @@ th,td{
 
 <div class="card">
 <h3>Egypt</h3>
-<p>Cairo Airport + City Center Warehouse</p>
+<p>Cairo Airport + City Center</p>
 </div>
 
 <div class="card">
@@ -230,13 +240,12 @@ const shipments={
 function track(){
 let id=document.getElementById("track").value;
 let r=document.getElementById("result");
-r.innerHTML=shipments[id]||"Not found";
+r.innerHTML=shipments[id]||"Tracking not found";
 }
 
 /* SLIDER */
 let slides=document.querySelectorAll(".slide");
 let index=0;
-
 setInterval(()=>{
   slides[index].classList.remove("active");
   index=(index+1)%slides.length;
