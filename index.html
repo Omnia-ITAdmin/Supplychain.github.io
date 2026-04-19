@@ -6,54 +6,14 @@
 <title>Smart Supply Chain</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
   font-family:Poppins;
-  overflow-x:hidden;
   background:#F9F6F1;
-}
-
-/* BACKGROUND ANIMATION */
-body::before{
-  content:"";
-  position:fixed;
-  width:200%;
-  height:100%;
-  background:url('https://images.unsplash.com/photo-1561488111-3d7b3e9dcb16');
-  background-size:cover;
-  opacity:0.07;
-  animation:moveBg 60s linear infinite;
-  z-index:-2;
-}
-
-body::after{
-  content:"";
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:url('https://upload.wikimedia.org/wikipedia/commons/e/e3/Kheops-Pyramid.jpg');
-  background-size:cover;
-  opacity:0.04;
-  z-index:-1;
-}
-
-@keyframes moveBg{
-  from{transform:translateX(0);}
-  to{transform:translateX(-30%);}
-}
-
-/* WATERMARK */
-.watermark{
-  position:fixed;
-  bottom:10%;
-  right:5%;
-  width:220px;
-  opacity:0.04;
-  z-index:-1;
+  overflow-x:hidden;
 }
 
 /* HEADER */
@@ -76,52 +36,109 @@ nav a{
   text-decoration:none;
 }
 
-.dropdown{position:relative;}
-.dropdown-content{
-  display:none;
-  position:absolute;
-  background:white;
+/* HERO */
+.hero{
+  height:100vh;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:white;
+  overflow:hidden;
 }
-.dropdown:hover .dropdown-content{display:block;}
 
+/* BACKGROUND */
+.hero::before{
+  content:"";
+  position:absolute;
+  width:200%;
+  height:100%;
+  background:url('https://images.unsplash.com/photo-1561488111-3d7b3e9dcb16');
+  background-size:cover;
+  animation:moveBg 60s linear infinite;
+  opacity:0.35;
+  z-index:-3;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:url('https://upload.wikimedia.org/wikipedia/commons/e/e3/Kheops-Pyramid.jpg');
+  background-size:cover;
+  opacity:0.15;
+  z-index:-2;
+}
+
+/* ROUTE LINE */
+.route{
+  position:absolute;
+  width:300px;
+  height:2px;
+  background:gold;
+  top:60%;
+  left:20%;
+}
+
+/* MOVING DOT */
+.dot{
+  position:absolute;
+  width:12px;
+  height:12px;
+  background:#C8A96A;
+  border-radius:50%;
+  animation:moveDot 6s linear infinite;
+}
+
+/* MAP TRACKING DOT */
+.map-dot{
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:red;
+  border-radius:50%;
+  top:50%;
+  left:40%;
+  animation:zoomPulse 2s infinite;
+}
+
+/* ANIMATIONS */
+@keyframes moveBg{
+  from{transform:translateX(0);}
+  to{transform:translateX(-30%);}
+}
+
+@keyframes moveDot{
+  0%{left:20%;top:60%;}
+  100%{left:60%;top:45%;}
+}
+
+/* ZOOM EFFECT */
+@keyframes zoomPulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.8);}
+  100%{transform:scale(1);}
+}
+
+/* BUTTON */
+.btn{
+  background:#C8A96A;
+  color:#0A2540;
+  padding:10px 20px;
+  border:none;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+/* SECTIONS */
 section{
   padding:100px 40px;
   text-align:center;
 }
 
-/* HERO */
-.hero{
-  height:100vh;
-  color:white;
-  background:linear-gradient(rgba(10,37,64,0.85),rgba(10,37,64,0.85));
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
-
-.btn{
-  background:#C8A96A;
-  padding:10px 20px;
-  border:none;
-  cursor:pointer;
-}
-
-/* FLOW LINE */
-.flow-line{
-  position:absolute;
-  width:100%;
-  height:2px;
-  background:linear-gradient(to right,#C8A96A,transparent);
-  top:70%;
-  animation:flow 5s linear infinite;
-}
-@keyframes flow{
-  from{left:-100%;}
-  to{left:100%;}
-}
-
-/* CARDS */
 .services{
   display:flex;
   gap:20px;
@@ -139,8 +156,8 @@ section{
 .dashboard{
   display:flex;
   gap:20px;
-  flex-wrap:wrap;
   justify-content:center;
+  flex-wrap:wrap;
 }
 .box{
   padding:20px;
@@ -150,9 +167,20 @@ section{
 
 /* MAP */
 .map{
+  position:relative;
   height:300px;
   background:url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
   background-size:cover;
+}
+
+/* WATERMARK */
+.watermark{
+  position:fixed;
+  bottom:10%;
+  right:5%;
+  width:200px;
+  opacity:0.08;
+  z-index:-1;
 }
 
 /* MOBILE */
@@ -171,16 +199,7 @@ section{
   <h3>Smart Supply Chain</h3>
   <nav>
     <a href="#home">Home</a>
-
-    <div class="dropdown">
-      <a href="#">Services ▼</a>
-      <div class="dropdown-content">
-        <a href="#shipping">Shipping</a>
-        <a href="#warehouse">Warehousing</a>
-        <a href="#ecommerce">E-commerce</a>
-      </div>
-    </div>
-
+    <a href="#services">Services</a>
     <a href="#dashboard">Dashboard</a>
     <a href="#map">Global</a>
     <a href="#contact">Contact</a>
@@ -189,10 +208,11 @@ section{
 
 <!-- HERO -->
 <section id="home" class="hero">
-  <div class="flow-line"></div>
+  <div class="route"></div>
+  <div class="dot"></div>
 
   <h1>Egyptian Heritage Logistics</h1>
-  <p>Connecting Egypt to the world</p>
+  <p>From Egypt to Europe and the world</p>
 
   <input id="track" placeholder="Tracking Number">
   <button class="btn" onclick="track()">Track</button>
@@ -210,10 +230,6 @@ section{
   </div>
 </section>
 
-<section id="shipping"><h2>Shipping</h2><p>Global transport</p></section>
-<section id="warehouse"><h2>Warehousing</h2><p>Secure storage</p></section>
-<section id="ecommerce"><h2>E-commerce</h2><p>Smart delivery</p></section>
-
 <!-- DASHBOARD -->
 <section id="dashboard">
   <h2>Dashboard</h2>
@@ -227,7 +243,9 @@ section{
 <!-- MAP -->
 <section id="map">
   <h2>Global Network</h2>
-  <div class="map"></div>
+  <div class="map">
+    <div class="map-dot"></div>
+  </div>
 </section>
 
 <!-- CONTACT -->
@@ -247,13 +265,13 @@ const shipments={
   "9885":{
     from:"Italy",
     to:"Canada",
-    timeline:["Received","Shipping Mediterranean","Crossing Atlantic","Canada Hub","Out for delivery"],
+    timeline:["Italy","Mediterranean","Atlantic","Canada","Out for delivery"],
     days:3
   },
   "1234":{
     from:"Egypt",
     to:"France",
-    timeline:["Cairo received","Departed Cairo","Flying","Arrived Paris","Out for delivery"],
+    timeline:["Cairo","Airport","Flight","Paris","Delivered"],
     days:5
   }
 };
@@ -272,8 +290,8 @@ function track(){
     📍 ${s.timeline[step]}<br>
     ⏳ ${s.days} days remaining
     `;
-  }else{
-    r.innerHTML="❌ Not found";
+  } else {
+    r.innerHTML="❌ Tracking not found";
   }
 }
 </script>
