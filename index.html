@@ -1,220 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Supply Chain</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:Poppins;background:#f4f6f9;color:#111}
-
-/* HEADER */
-header{
-  position:fixed;
-  width:100%;
-  background:#0B1F3A;
-  color:white;
-  padding:15px 40px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  z-index:1000;
-  border-bottom:3px solid gold;
-}
-nav a{
-  margin-left:20px;
-  cursor:pointer;
-  color:white;
-}
-
-/* HERO MAP */
-.hero{
-  height:100vh;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  color:white;
-  overflow:hidden;
-
-  background:
-  linear-gradient(rgba(11,31,58,0.85),rgba(11,31,58,0.9)),
-  url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
-
-  background-size:cover;
-}
-
-/* MAP ANIMATION */
-.map-animation{
-  position:absolute;
-  width:100%;
-  height:100%;
-  z-index:1;
-}
-
-/* ROUTE LINE */
-.route{
-  position:absolute;
-  width:300px;
-  height:2px;
-  background:gold;
-  top:60%;
-  left:30%;
-  transform:rotate(-20deg);
-}
-
-/* MOVING DOT */
-.dot{
-  width:12px;
-  height:12px;
-  background:#FF4D4D;
-  border-radius:50%;
-  position:absolute;
-  top:60%;
-  left:30%;
-  animation:moveShip 6s linear infinite;
-  box-shadow:0 0 10px #FF4D4D;
-}
-
-@keyframes moveShip{
-  0%{left:30%; top:60%;}
-  100%{left:60%; top:40%;}
-}
-
-/* CONTENT */
-.hero-content{
-  position:relative;
-  z-index:2;
-}
-
-.hero h1{
-  font-size:50px;
-}
-.hero p{
-  margin:20px 0;
-}
-
-input{
-  padding:12px;
-  width:260px;
-  border:none;
-}
-button{
-  padding:12px 25px;
-  background:gold;
-  border:none;
-  cursor:pointer;
-}
-
-/* SECTION */
-.section{
-  padding:100px 50px;
-  text-align:center;
-}
-
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-}
-.card{
-  background:white;
-  padding:25px;
-  border-radius:10px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-/* FOOTER */
-footer{
-  background:#0B1F3A;
-  color:white;
-  padding:30px;
-  text-align:center;
-}
-</style>
-</head>
-
-<body>
-
+<!-- LOGO -->
 <header>
+<div style="display:flex;align-items:center;gap:10px">
+
+<svg width="40" height="40" viewBox="0 0 100 100">
+<path d="M50 10 L65 40 L50 30 L35 40 Z" fill="gold"/>
+<ellipse cx="50" cy="65" rx="10" ry="15" fill="#0B1F3A"/>
+</svg>
+
 <h3>Smart Supply Chain</h3>
+</div>
+
 <nav>
 <a onclick="show('home')">Home</a>
-<a onclick="show('services')">Services</a>
-<a onclick="show('contact')">Contact</a>
+<a onclick="show('countries')">Countries</a>
+<a onclick="show('shipping')">Shipping</a>
+<a onclick="show('tracking')">Tracking</a>
 </nav>
 </header>
 
-<!-- HERO -->
-<section id="home" class="hero active">
-
-<div class="map-animation">
-  <div class="route"></div>
-  <div class="dot"></div>
-</div>
-
-<div class="hero-content">
-<h1>Global Logistics Network</h1>
-<p>Tracking shipments across the world in real time</p>
-
-<input id="track" placeholder="Tracking Number">
-<button onclick="track()">Track</button>
-
-<div id="result"></div>
-</div>
-
-</section>
-
-<!-- SERVICES -->
-<section id="services" class="section">
-<h2>Our Services</h2>
+<!-- COUNTRIES -->
+<section id="countries" class="section">
+<h2>Countries</h2>
 
 <div class="grid">
-<div class="card">🚢 Sea Freight</div>
-<div class="card">✈️ Air Freight</div>
-<div class="card">🏬 Warehousing</div>
-<div class="card">📦 E-commerce</div>
+<div onclick="openCountry('Egypt')">🇪🇬 Egypt</div>
+<div onclick="openCountry('France')">🇫🇷 France</div>
+<div onclick="openCountry('Italy')">🇮🇹 Italy</div>
+<div onclick="openCountry('Canada')">🇨🇦 Canada</div>
 </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact" class="section">
-<h2>Contact</h2>
-<p>📞 012*******</p>
-<p>📧 supplychain@*****</p>
-<p>Response within 24 hours</p>
+<!-- WAREHOUSE -->
+<section id="warehouse" class="section">
+<h2 id="countryName"></h2>
+<p>Warehouse near airport & port</p>
+
+<div class="map">
+<div class="dot"></div>
+</div>
 </section>
 
-<footer>
-© 2026 Smart Supply Chain
-</footer>
+<!-- SHIPPING -->
+<section id="shipping" class="section">
+<h2>Shipping</h2>
+
+<p>🚢 Sea | ✈️ Air</p>
+
+<div class="map">
+<div class="dot"></div>
+</div>
+</section>
+
+<!-- TRACKING -->
+<section id="tracking" class="section">
+<h2>Tracking</h2>
+
+<p>1234 → Canada to France (3 days)</p>
+<p>2222 → Austria to UK (2 days)</p>
+
+</section>
 
 <script>
-function show(page){
+function show(id){
 document.querySelectorAll('.section').forEach(s=>s.style.display='none');
-document.getElementById(page).style.display='block';
+document.getElementById(id).style.display='block';
 }
 
-/* TRACKING */
-function track(){
-let id=document.getElementById("track").value;
-
-if(id=="1234"){
-result.innerHTML="🚢 Canada → France (3 days)";
-}
-else if(id=="2222"){
-result.innerHTML="✈️ Austria → UK (2 days)";
-}
-else{
-result.innerHTML="Tracking not found";
-}
+function openCountry(name){
+show('warehouse');
+document.getElementById("countryName").innerHTML=name;
 }
 </script>
-
-</body>
-</html>
