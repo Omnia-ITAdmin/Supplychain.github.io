@@ -6,35 +6,56 @@
 <title>Smart Supply Chain Solutions</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <style>
-* {margin:0; padding:0; box-sizing:border-box;}
-body {font-family:'Poppins', sans-serif; color:#111; line-height:1.6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:Poppins;background:#F9F6F1;color:#111;}
 
-header {
+/* HEADER */
+header{
   background:#0A2540;
   color:white;
-  padding:20px 50px;
+  padding:15px 40px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  position:sticky;
+  position:fixed;
+  width:100%;
   top:0;
   z-index:1000;
+  border-bottom:3px solid #C8A96A;
 }
-header nav a {
+
+nav a{
   color:white;
-  margin-left:25px;
+  margin:0 15px;
   text-decoration:none;
   font-weight:500;
 }
 
-.hero {
+/* DROPDOWN */
+.dropdown{position:relative;display:inline-block;}
+.dropdown-content{
+  display:none;
+  position:absolute;
+  background:white;
+  min-width:160px;
+  box-shadow:0 5px 10px rgba(0,0,0,0.2);
+}
+.dropdown-content a{
+  display:block;
+  padding:10px;
+  color:#0A2540;
+}
+.dropdown:hover .dropdown-content{display:block;}
+
+/* HERO */
+.hero{
   height:100vh;
-  background:linear-gradient(rgba(10,37,64,0.75),rgba(10,37,64,0.75)),
-  url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d');
+  background:linear-gradient(rgba(10,37,64,0.8),rgba(10,37,64,0.8)),
+  url('https://images.unsplash.com/photo-1561488111-3d7b3e9dcb16');
   background-size:cover;
-  background-position:center;
   color:white;
   display:flex;
   flex-direction:column;
@@ -43,80 +64,77 @@ header nav a {
   text-align:center;
 }
 
-.hero h1 {font-size:52px; margin-bottom:20px;}
-.hero p {margin-bottom:25px; font-size:18px;}
+.hero h1{font-size:48px;}
+.hero span{color:#C8A96A;}
 
-.hero input {
-  padding:12px;
-  width:260px;
+.btn{
+  background:#C8A96A;
+  color:#0A2540;
+  padding:10px 20px;
   border:none;
-  border-radius:5px;
-}
-.btn {
-  background:#FF7A00;
-  color:white;
-  padding:12px 25px;
-  border:none;
-  border-radius:5px;
-  margin-left:10px;
+  margin-top:10px;
   cursor:pointer;
-  transition:0.3s;
+  font-weight:bold;
 }
-.btn:hover {transform:scale(1.05);}
 
-.section {
-  padding:90px 50px;
+/* SECTIONS */
+section{
+  padding:100px 40px;
   text-align:center;
 }
 
-.services {
+.services{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.card{
+  padding:25px;
+  width:230px;
+  background:white;
+  border-radius:10px;
+  border-top:4px solid #C8A96A;
+  box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+/* DASHBOARD */
+.dashboard{
   display:flex;
   justify-content:center;
   gap:30px;
   flex-wrap:wrap;
 }
-.card {
-  width:260px;
-  padding:30px;
-  border-radius:12px;
-  background:white;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
-  transition:0.4s;
-}
-.card:hover {
-  transform:translateY(-12px);
+.box{
+  padding:20px;
+  background:#C8A96A;
+  color:#0A2540;
+  border-radius:10px;
+  font-weight:bold;
 }
 
-.split {
-  display:flex;
-  align-items:center;
-  gap:50px;
-  flex-wrap:wrap;
-}
-.split img {
-  width:100%;
-  max-width:450px;
-  border-radius:12px;
-}
-
-.dark {
+/* DARK */
+.dark{
   background:#0A2540;
   color:white;
 }
 
-.contact input, .contact textarea {
-  width:300px;
+/* CONTACT */
+input, textarea{
   padding:10px;
-  margin:10px 0;
-  border:1px solid #ccc;
+  width:260px;
+  margin:10px;
   border-radius:5px;
+  border:1px solid #ccc;
 }
 
-footer {
+/* FOOTER */
+footer{
   background:#0A2540;
   color:white;
-  padding:30px;
   text-align:center;
+  padding:20px;
+  border-top:3px solid #C8A96A;
 }
 </style>
 </head>
@@ -124,64 +142,104 @@ footer {
 <body>
 
 <header>
-  <h2>Smart Supply Chain</h2>
+  <h3>Smart Supply Chain</h3>
   <nav>
-    <a href="#">Home</a>
-    <a href="#">Services</a>
-    <a href="#">Contact</a>
+    <a href="#home">Home</a>
+
+    <div class="dropdown">
+      <a href="#">Services ▼</a>
+      <div class="dropdown-content">
+        <a href="#shipping">Shipping</a>
+        <a href="#warehouse">Warehousing</a>
+        <a href="#ecommerce">E-commerce</a>
+      </div>
+    </div>
+
+    <a href="#dashboard">Dashboard</a>
+    <a href="#map">Global</a>
+    <a href="#contact">Contact</a>
   </nav>
 </header>
 
-<section class="hero">
-  <h1>Smart Logistics & Supply Chain</h1>
-  <p>Fast, reliable and optimized delivery solutions worldwide</p>
-  <div>
-    <input placeholder="Enter Tracking Number">
-    <button class="btn">Track Shipment</button>
-  </div>
+<!-- HERO -->
+<section id="home" class="hero" data-aos="fade-in">
+  <h1><span>Egyptian Heritage</span> Meets Modern Logistics</h1>
+  <p>Connecting Egypt to the world through smart supply chains</p>
+
+  <input id="track" placeholder="Tracking Number">
+  <button class="btn" onclick="track()">Track Shipment</button>
+
+  <div id="result"></div>
 </section>
 
-<section class="section">
+<!-- SERVICES -->
+<section data-aos="fade-up">
   <h2>Our Services</h2>
   <div class="services">
-    <div class="card">🚚 Shipping & Delivery</div>
-    <div class="card">🏬 Warehousing</div>
-    <div class="card">🛒 E-commerce Logistics</div>
-    <div class="card">⚙️ Optimization</div>
+    <div class="card" data-aos="zoom-in">🚚 Global Shipping</div>
+    <div class="card" data-aos="zoom-in">🏬 Smart Warehousing</div>
+    <div class="card" data-aos="zoom-in">🛒 E-commerce Logistics</div>
   </div>
 </section>
 
-<section class="section split">
-  <img src="https://images.unsplash.com/photo-1605902711622-cfb43c4437d1">
-  <div>
-    <h2>Supply Chain Management</h2>
-    <p>We connect suppliers, warehouses, and customers using smart systems to reduce cost and improve efficiency.</p>
+<!-- SUB SECTIONS -->
+<section id="shipping">
+  <h2>Shipping</h2>
+  <p>Fast transportation across continents.</p>
+</section>
+
+<section id="warehouse">
+  <h2>Warehousing</h2>
+  <p>Secure storage and inventory management.</p>
+</section>
+
+<section id="ecommerce">
+  <h2>E-commerce</h2>
+  <p>Efficient order processing and delivery.</p>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" data-aos="fade-up">
+  <h2>Logistics Dashboard</h2>
+  <div class="dashboard">
+    <div class="box">1200+ Deliveries</div>
+    <div class="box">50 Warehouses</div>
+    <div class="box">30 Countries</div>
   </div>
 </section>
 
-<section class="section split">
-  <div>
-    <h2>E-commerce Logistics</h2>
-    <p>Fast order processing, packaging, and last-mile delivery with real-time tracking.</p>
-  </div>
-  <img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4">
-</section>
-
-<section class="section dark">
+<!-- MAP -->
+<section id="map" class="dark" data-aos="fade-up">
   <h2>Global Network</h2>
-  <p>Worldwide logistics coverage with optimized routes and smart tracking systems.</p>
+  <p>From Egypt to the world</p>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" width="80%">
 </section>
 
-<section class="section contact">
+<!-- CONTACT -->
+<section id="contact" data-aos="fade-up">
   <h2>Contact Us</h2>
-  <input placeholder="Your Email"><br>
-  <textarea placeholder="Your Message"></textarea><br>
-  <button class="btn">Send Message</button>
+  <input placeholder="Email"><br>
+  <textarea placeholder="Message"></textarea><br>
+  <button class="btn">Send</button>
 </section>
 
 <footer>
-  <p>© 2026 Smart Supply Chain Solutions</p>
+© 2026 Smart Supply Chain — Inspired by Egyptian Heritage
 </footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init();
+
+function track(){
+  let id=document.getElementById("track").value;
+  if(id==="123"){
+    document.getElementById("result").innerHTML="🚚 Shipment is on the way";
+  }else{
+    document.getElementById("result").innerHTML="❌ Tracking not found";
+  }
+}
+</script>
 
 </body>
 </html>
