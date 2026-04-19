@@ -18,19 +18,26 @@ header{
   padding:15px 40px;
   display:flex;
   justify-content:space-between;
+  align-items:center;
   position:fixed;
   width:100%;
   z-index:1000;
   border-bottom:3px solid #D4AF37;
 }
+
 nav a{
-  color:white;
   margin-left:20px;
-  cursor:pointer;
+  color:white;
   text-decoration:none;
+  cursor:pointer;
 }
 
-/* HERO */
+/* LANGUAGE */
+.lang select{
+  padding:5px;
+}
+
+/* HERO SLIDER */
 .hero{
   height:90vh;
   position:relative;
@@ -41,7 +48,6 @@ nav a{
   overflow:hidden;
 }
 
-/* SLIDER */
 .slide{
   position:absolute;
   width:100%;
@@ -49,8 +55,9 @@ nav a{
   background-size:cover;
   background-position:center;
   opacity:0;
-  transition:1s;
+  transition:1.2s;
 }
+
 .slide.active{opacity:1;}
 
 .overlay{
@@ -66,11 +73,14 @@ nav a{
   max-width:600px;
 }
 
-.hero h1{font-size:42px;}
-.hero input{
+.hero h1{font-size:42px;margin-bottom:10px;}
+.hero p{margin-bottom:20px;}
+
+input{
   padding:10px;
   width:250px;
 }
+
 .btn{
   background:#D4AF37;
   padding:10px 20px;
@@ -78,13 +88,14 @@ nav a{
   cursor:pointer;
 }
 
-/* SECTION */
+/* SECTIONS */
 .section{
   display:none;
   padding:100px 50px;
 }
 .active{display:block;}
 
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -101,8 +112,8 @@ nav a{
 /* TABLE */
 table{
   width:100%;
-  margin-top:20px;
   border-collapse:collapse;
+  margin-top:20px;
 }
 th,td{
   padding:10px;
@@ -110,35 +121,51 @@ th,td{
   text-align:center;
 }
 
-/* WATERMARK */
-.watermark{
-  position:fixed;
-  bottom:10%;
-  right:5%;
-  width:150px;
-  opacity:0.05;
+/* ANIMATION FEEL (subtle movement) */
+.slide::after{
+  content:"";
+  position:absolute;
+  width:200%;
+  height:100%;
+  background:inherit;
+  opacity:0.2;
+  animation:move 20s linear infinite;
 }
+
+@keyframes move{
+  from{transform:translateX(0);}
+  to{transform:translateX(-20%);}
+}
+
 </style>
 </head>
 
 <body>
 
-<img class="watermark" src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Tutankhamun_Mask.jpg">
-
 <header>
 <h3>Smart Supply Chain</h3>
+
 <nav>
 <a onclick="showPage('home')">Home</a>
 <a onclick="showPage('solutions')">Solutions</a>
-<a onclick="showPage('countries')">Countries</a>
+<a onclick="showPage('industries')">Industries</a>
 <a onclick="showPage('shipping')">Shipping</a>
 <a onclick="showPage('warehousing')">Warehousing</a>
 </nav>
+
+<div class="lang">
+<select onchange="changeLang(this.value)">
+<option value="en">EN</option>
+<option value="ar">AR</option>
+<option value="fr">FR</option>
+</select>
+</div>
 </header>
 
-<!-- HOME -->
+<!-- HERO -->
 <section id="home" class="hero active">
 
+<!-- Egyptian professional images -->
 <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1572252009286-268acec5ca0a')"></div>
 <div class="slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Tutankhamun_Mask.jpg')"></div>
 <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1590005354167-6da97870c757')"></div>
@@ -146,12 +173,12 @@ th,td{
 <div class="overlay"></div>
 
 <div class="hero-content">
-<h1>Egyptian Supply Chain Solutions for a Global Market</h1>
-<p>Inspired by ancient trade. Powered by modern logistics.</p>
+<h1 id="title">Egyptian Supply Chain Solutions</h1>
+<p id="desc">From ancient trade to modern logistics</p>
 
 <input id="track" placeholder="Tracking Number">
 <br><br>
-<button class="btn" onclick="track()">Track Shipment</button>
+<button class="btn" onclick="track()">Track</button>
 
 <div id="result"></div>
 </div>
@@ -160,40 +187,35 @@ th,td{
 
 <!-- SOLUTIONS -->
 <section id="solutions" class="section">
-<h2>Our Solutions</h2>
+<h2>Solutions</h2>
 
 <div class="grid">
 <div class="card">🚚 Transportation (Air & Sea)</div>
-<div class="card">🏬 Warehousing (Near Airports)</div>
+<div class="card">🏬 Warehousing near Airports</div>
 <div class="card">🛒 E-commerce Logistics</div>
 </div>
 </section>
 
-<!-- COUNTRIES -->
-<section id="countries" class="section">
-<h2>Countries</h2>
+<!-- INDUSTRIES -->
+<section id="industries" class="section">
+<h2>Industries</h2>
 
 <div class="grid">
-<div class="card">🇪🇬 Egypt</div>
-<div class="card">🇫🇷 France</div>
-<div class="card">🇮🇹 Italy</div>
-<div class="card">🇨🇦 Canada</div>
-<div class="card">🇩🇪 Germany</div>
-<div class="card">🇦🇪 UAE</div>
-<div class="card">🇨🇳 China</div>
-<div class="card">🇮🇳 India</div>
+<div class="card">Retail</div>
+<div class="card">Healthcare</div>
+<div class="card">Technology</div>
+<div class="card">Manufacturing</div>
 </div>
 </section>
 
 <!-- SHIPPING -->
 <section id="shipping" class="section">
-<h2>Shipping Methods</h2>
+<h2>Shipping</h2>
 
 <table>
 <tr><th>Route</th><th>Air</th><th>Sea</th><th>Company</th></tr>
 <tr><td>Egypt → France</td><td>5 days</td><td>12 days</td><td>CGM</td></tr>
 <tr><td>Italy → Canada</td><td>7 days</td><td>15 days</td><td>CMM</td></tr>
-<tr><td>China → UAE</td><td>4 days</td><td>10 days</td><td>CGM</td></tr>
 </table>
 
 </section>
@@ -202,20 +224,9 @@ th,td{
 <section id="warehousing" class="section">
 <h2>Warehousing</h2>
 
-<div class="card">
-<h3>Egypt</h3>
-<p>Cairo Airport + City Center</p>
-</div>
-
-<div class="card">
-<h3>France</h3>
-<p>Paris Airport + Central Hub</p>
-</div>
-
-<div class="card">
-<h3>Italy</h3>
-<p>Milan Airport + Logistics Zone</p>
-</div>
+<div class="card">Egypt - Cairo Airport + City Center</div>
+<div class="card">France - Paris Airport + Central Hub</div>
+<div class="card">Italy - Milan Logistics Zone</div>
 
 </section>
 
@@ -226,7 +237,7 @@ function showPage(page){
 
   if(page==="home"){
     document.querySelector('.hero').classList.add('active');
-  } else {
+  }else{
     document.getElementById(page).classList.add('active');
   }
 }
@@ -239,18 +250,34 @@ const shipments={
 
 function track(){
 let id=document.getElementById("track").value;
-let r=document.getElementById("result");
-r.innerHTML=shipments[id]||"Tracking not found";
+document.getElementById("result").innerHTML=
+shipments[id] || "Tracking not found";
 }
 
 /* SLIDER */
 let slides=document.querySelectorAll(".slide");
-let index=0;
+let i=0;
 setInterval(()=>{
-  slides[index].classList.remove("active");
-  index=(index+1)%slides.length;
-  slides[index].classList.add("active");
-},4000);
+  slides[i].classList.remove("active");
+  i=(i+1)%slides.length;
+  slides[i].classList.add("active");
+},5000);
+
+/* LANGUAGE (basic demo) */
+function changeLang(lang){
+  if(lang==="ar"){
+    document.getElementById("title").innerHTML="حلول سلاسل الإمداد المصرية";
+    document.getElementById("desc").innerHTML="من التجارة القديمة إلى اللوجستيات الحديثة";
+  }
+  else if(lang==="fr"){
+    document.getElementById("title").innerHTML="Solutions Logistiques Égyptiennes";
+    document.getElementById("desc").innerHTML="Du commerce ancien à la logistique moderne";
+  }
+  else{
+    document.getElementById("title").innerHTML="Egyptian Supply Chain Solutions";
+    document.getElementById("desc").innerHTML="From ancient trade to modern logistics";
+  }
+}
 </script>
 
 </body>
