@@ -13,8 +13,47 @@
 html{scroll-behavior:smooth;}
 body{
   font-family:Poppins;
+  overflow-x:hidden;
   background:#F9F6F1;
-  background-image:url('https://www.transparenttextures.com/patterns/egyptian.png');
+}
+
+/* BACKGROUND ANIMATION */
+body::before{
+  content:"";
+  position:fixed;
+  width:200%;
+  height:100%;
+  background:url('https://images.unsplash.com/photo-1561488111-3d7b3e9dcb16');
+  background-size:cover;
+  opacity:0.07;
+  animation:moveBg 60s linear infinite;
+  z-index:-2;
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:url('https://upload.wikimedia.org/wikipedia/commons/e/e3/Kheops-Pyramid.jpg');
+  background-size:cover;
+  opacity:0.04;
+  z-index:-1;
+}
+
+@keyframes moveBg{
+  from{transform:translateX(0);}
+  to{transform:translateX(-30%);}
+}
+
+/* WATERMARK */
+.watermark{
+  position:fixed;
+  bottom:10%;
+  right:5%;
+  width:220px;
+  opacity:0.04;
+  z-index:-1;
 }
 
 /* HEADER */
@@ -45,20 +84,22 @@ nav a{
 }
 .dropdown:hover .dropdown-content{display:block;}
 
+section{
+  padding:100px 40px;
+  text-align:center;
+}
+
 /* HERO */
 .hero{
   height:100vh;
-  background:linear-gradient(rgba(10,37,64,0.8),rgba(10,37,64,0.8)),
-  url('https://images.unsplash.com/photo-1561488111-3d7b3e9dcb16');
-  background-size:cover;
   color:white;
+  background:linear-gradient(rgba(10,37,64,0.85),rgba(10,37,64,0.85));
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
 }
 
-input{padding:10px;width:250px;}
 .btn{
   background:#C8A96A;
   padding:10px 20px;
@@ -66,10 +107,27 @@ input{padding:10px;width:250px;}
   cursor:pointer;
 }
 
-/* SECTIONS */
-section{padding:100px 40px;text-align:center;}
+/* FLOW LINE */
+.flow-line{
+  position:absolute;
+  width:100%;
+  height:2px;
+  background:linear-gradient(to right,#C8A96A,transparent);
+  top:70%;
+  animation:flow 5s linear infinite;
+}
+@keyframes flow{
+  from{left:-100%;}
+  to{left:100%;}
+}
 
-.services{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+/* CARDS */
+.services{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
 .card{
   padding:20px;
   width:220px;
@@ -78,8 +136,17 @@ section{padding:100px 40px;text-align:center;}
 }
 
 /* DASHBOARD */
-.dashboard{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;}
-.box{padding:20px;background:#C8A96A;border-radius:10px;}
+.dashboard{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.box{
+  padding:20px;
+  background:#C8A96A;
+  border-radius:10px;
+}
 
 /* MAP */
 .map{
@@ -98,11 +165,22 @@ section{padding:100px 40px;text-align:center;}
 
 <body>
 
+<img class="watermark" src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Tutankhamun_Mask.jpg">
+
 <header>
   <h3>Smart Supply Chain</h3>
   <nav>
     <a href="#home">Home</a>
-    <a href="#services">Services</a>
+
+    <div class="dropdown">
+      <a href="#">Services ▼</a>
+      <div class="dropdown-content">
+        <a href="#shipping">Shipping</a>
+        <a href="#warehouse">Warehousing</a>
+        <a href="#ecommerce">E-commerce</a>
+      </div>
+    </div>
+
     <a href="#dashboard">Dashboard</a>
     <a href="#map">Global</a>
     <a href="#contact">Contact</a>
@@ -111,10 +189,12 @@ section{padding:100px 40px;text-align:center;}
 
 <!-- HERO -->
 <section id="home" class="hero">
-  <h1>Egyptian Heritage Logistics</h1>
-  <p>Global Smart Supply Chain</p>
+  <div class="flow-line"></div>
 
-  <input id="track" placeholder="Enter Tracking Number">
+  <h1>Egyptian Heritage Logistics</h1>
+  <p>Connecting Egypt to the world</p>
+
+  <input id="track" placeholder="Tracking Number">
   <button class="btn" onclick="track()">Track</button>
 
   <div id="result"></div>
@@ -129,6 +209,10 @@ section{padding:100px 40px;text-align:center;}
     <div class="card">🛒 E-commerce</div>
   </div>
 </section>
+
+<section id="shipping"><h2>Shipping</h2><p>Global transport</p></section>
+<section id="warehouse"><h2>Warehousing</h2><p>Secure storage</p></section>
+<section id="ecommerce"><h2>E-commerce</h2><p>Smart delivery</p></section>
 
 <!-- DASHBOARD -->
 <section id="dashboard">
@@ -159,53 +243,37 @@ section{padding:100px 40px;text-align:center;}
 </footer>
 
 <script>
-/* INDUSTRY-LIKE TRACKING SIMULATION */
-
-const shipments = {
-  "9885": {
+const shipments={
+  "9885":{
     from:"Italy",
     to:"Canada",
-    timeline:[
-      "📦 Package received in Italy",
-      "🚢 Shipping across Mediterranean",
-      "🌊 Crossing Atlantic Ocean",
-      "🚚 Arrived in Canada hub",
-      "📦 Out for delivery"
-    ],
+    timeline:["Received","Shipping Mediterranean","Crossing Atlantic","Canada Hub","Out for delivery"],
     days:3
   },
-  "1234": {
+  "1234":{
     from:"Egypt",
     to:"France",
-    timeline:[
-      "📦 Package received in Cairo",
-      "✈️ Departed Cairo Airport",
-      "🛫 Flying over Mediterranean",
-      "🇫🇷 Arrived in Paris",
-      "🚚 Out for delivery"
-    ],
+    timeline:["Cairo received","Departed Cairo","Flying","Arrived Paris","Out for delivery"],
     days:5
   }
 };
 
 function track(){
   let id=document.getElementById("track").value;
-  let result=document.getElementById("result");
+  let r=document.getElementById("result");
 
   if(shipments[id]){
     let s=shipments[id];
+    let step=Math.floor(Date.now()/5000)%s.timeline.length;
 
-    let step=Math.min(Math.floor(Date.now()/5000)%s.timeline.length,s.timeline.length-1);
-
-    result.innerHTML=`
-    <br>
-    📦 Tracking: ${id}<br>
+    r.innerHTML=`
+    📦 ${id}<br>
     🌍 ${s.from} → ${s.to}<br>
-    📍 Status: ${s.timeline[step]}<br>
+    📍 ${s.timeline[step]}<br>
     ⏳ ${s.days} days remaining
     `;
-  } else {
-    result.innerHTML="❌ Tracking not found";
+  }else{
+    r.innerHTML="❌ Not found";
   }
 }
 </script>
