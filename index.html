@@ -27,28 +27,52 @@ nav a{
   color:white;
   margin:0 10px;
   text-decoration:none;
+  cursor:pointer;
 }
 
-/* HERO */
+/* HERO SLIDER */
 .hero{
   height:100vh;
-  background:url('https://images.unsplash.com/photo-1561488111-3d7b3e9dcb16') center/cover;
+  position:relative;
+  overflow:hidden;
   display:flex;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
   color:white;
-  position:relative;
 }
-.hero::after{
-  content:"";
+
+.slide{
   position:absolute;
   width:100%;
   height:100%;
-  background:rgba(11,31,58,0.75);
+  background-size:cover;
+  background-position:center;
+  animation:fade 18s infinite;
 }
-.hero *{z-index:1;}
+
+.slide:nth-child(1){background:url('https://images.unsplash.com/photo-1572252009286-268acec5ca0a');}
+.slide:nth-child(2){background:url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Tutankhamun_Mask.jpg');}
+.slide:nth-child(3){background:url('https://images.unsplash.com/photo-1590005354167-6da97870c757');}
+
+@keyframes fade{
+  0%{opacity:1;}
+  33%{opacity:0;}
+  66%{opacity:0;}
+  100%{opacity:1;}
+}
+
+.overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(11,31,58,0.7);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+}
 
 button{
   padding:10px 20px;
@@ -57,116 +81,72 @@ button{
   cursor:pointer;
 }
 
-/* SECTION */
-section{padding:100px 30px;text-align:center;}
-
-/* DASHBOARD */
-.dashboard{
-  display:flex;
-  gap:20px;
-  justify-content:center;
-  flex-wrap:wrap;
+/* SECTIONS */
+.section{
+  display:none;
+  padding:100px 30px;
+  text-align:center;
 }
+.active{display:block;}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+}
+td,th{
+  border:1px solid #ccc;
+  padding:10px;
+}
+
+/* CARD */
 .card{
   background:white;
-  padding:20px;
-  width:220px;
-  border-radius:10px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  padding:15px;
+  margin:10px;
+  border-radius:8px;
 }
-.card h3{color:#0B1F3A;}
-.card p{color:#D4AF37;font-size:20px;font-weight:bold;}
 
-/* COUNTRIES */
+/* COUNTRIES GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
   gap:10px;
 }
+
 .country{
   background:white;
   padding:10px;
   border-radius:6px;
   cursor:pointer;
 }
-.country:hover{
-  background:#D4AF37;
-  color:#0B1F3A;
-}
-
-/* INFO */
-#info{
-  margin-top:20px;
-  background:white;
-  padding:15px;
-  border-radius:6px;
-}
-
-/* MAP */
-.map{
-  position:relative;
-  width:100%;
-  height:400px;
-}
-
-/* SVG ROUTE */
-svg{
-  width:100%;
-  height:100%;
-}
-
-/* ROUTE LINE */
-.path{
-  fill:none;
-  stroke:#D4AF37;
-  stroke-width:2;
-  stroke-dasharray:300;
-  stroke-dashoffset:300;
-  animation:draw 5s linear infinite;
-}
-
-/* MOVING DOT */
-.dot{
-  fill:red;
-  animation:moveDot 5s linear infinite;
-}
-
-@keyframes draw{
-  to{stroke-dashoffset:0;}
-}
-
-@keyframes moveDot{
-  0%{offset-distance:0%;}
-  100%{offset-distance:100%;}
-}
-
-/* WATERMARK */
-.watermark{
-  position:fixed;
-  bottom:10%;
-  right:5%;
-  width:150px;
-  opacity:0.05;
-}
+.country:hover{background:#D4AF37;color:#0B1F3A;}
 </style>
 </head>
 
 <body>
 
-<img class="watermark" src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Tutankhamun_Mask.jpg">
-
 <header>
 <h3>Smart Supply Chain</h3>
 <nav>
-<a href="#home">Home</a>
-<a href="#dashboard">Dashboard</a>
-<a href="#countries">Countries</a>
-<a href="#map">Map</a>
+<a onclick="showPage('home')">Home</a>
+<a onclick="showPage('countries')">Countries</a>
+<a onclick="showPage('shipping')">Shipping</a>
+<a onclick="showPage('warehousing')">Warehousing</a>
 </nav>
 </header>
 
-<!-- HERO -->
-<section id="home" class="hero">
+<!-- HOME -->
+<section id="home" class="hero active">
+
+<div class="slide"></div>
+<div class="slide"></div>
+<div class="slide"></div>
+
+<div class="overlay"></div>
+
+<div class="hero-content">
 <h1>Egyptian Heritage Logistics</h1>
 <p>Connecting Egypt to the world</p>
 
@@ -175,60 +155,74 @@ svg{
 <button onclick="track()">Track</button>
 
 <div id="result"></div>
-</section>
-
-<!-- DASHBOARD -->
-<section id="dashboard">
-<h2>Operations Dashboard</h2>
-<div class="dashboard">
-<div class="card"><h3>Deliveries</h3><p>1200+</p></div>
-<div class="card"><h3>Warehouses</h3><p>50</p></div>
-<div class="card"><h3>Countries</h3><p>30+</p></div>
-<div class="card"><h3>Fleet</h3><p>320</p></div>
 </div>
+
 </section>
 
 <!-- COUNTRIES -->
-<section id="countries">
+<section id="countries" class="section">
 <h2>Countries</h2>
 
 <div class="grid">
-<div class="country" onclick="show('Egypt')">🇪🇬 Egypt</div>
-<div class="country" onclick="show('France')">🇫🇷 France</div>
-<div class="country" onclick="show('Italy')">🇮🇹 Italy</div>
-<div class="country" onclick="show('Canada')">🇨🇦 Canada</div>
-<div class="country" onclick="show('Germany')">🇩🇪 Germany</div>
-<div class="country" onclick="show('UAE')">🇦🇪 UAE</div>
-<div class="country" onclick="show('China')">🇨🇳 China</div>
-<div class="country" onclick="show('India')">🇮🇳 India</div>
+<div class="country">🇪🇬 Egypt</div>
+<div class="country">🇫🇷 France</div>
+<div class="country">🇮🇹 Italy</div>
+<div class="country">🇨🇦 Canada</div>
+<div class="country">🇩🇪 Germany</div>
+<div class="country">🇦🇪 UAE</div>
+<div class="country">🇨🇳 China</div>
+<div class="country">🇮🇳 India</div>
 </div>
 
-<div id="info">Click a country</div>
 </section>
 
-<!-- MAP -->
-<section id="map">
-<h2>Global Routes</h2>
+<!-- SHIPPING -->
+<section id="shipping" class="section">
+<h2>Shipping Methods</h2>
 
-<div class="map">
-<svg viewBox="0 0 800 400">
+<table>
+<tr>
+<th>Country</th>
+<th>Airplane</th>
+<th>Ship</th>
+<th>Company</th>
+</tr>
 
-<!-- Egypt to France -->
-<path class="path" d="M300 250 Q400 200 500 180"/>
+<tr><td>Egypt → France</td><td>5 days</td><td>12 days</td><td>CGM</td></tr>
+<tr><td>Italy → Canada</td><td>7 days</td><td>15 days</td><td>CMM</td></tr>
+<tr><td>China → UAE</td><td>4 days</td><td>10 days</td><td>CGM</td></tr>
 
-<!-- Moving dot -->
-<circle r="5" class="dot">
-  <animateMotion dur="5s" repeatCount="indefinite">
-    <mpath href="#route1"/>
-  </animateMotion>
-</circle>
+</table>
 
-</svg>
+</section>
+
+<!-- WAREHOUSING -->
+<section id="warehousing" class="section">
+<h2>Warehousing</h2>
+
+<div class="card">
+<h3>Egypt</h3>
+<p>Near Cairo Airport + City Center</p>
+</div>
+
+<div class="card">
+<h3>France</h3>
+<p>Near Paris Airport + Central Hub</p>
+</div>
+
+<div class="card">
+<h3>Italy</h3>
+<p>Milan Airport + Logistics Zone</p>
 </div>
 
 </section>
 
 <script>
+function showPage(page){
+  document.querySelectorAll('.section, .hero').forEach(s=>s.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+}
+
 /* TRACKING */
 const shipments={
 "9885":"Italy → Canada (3 days remaining)",
@@ -239,22 +233,6 @@ function track(){
 let id=document.getElementById("track").value;
 let r=document.getElementById("result");
 r.innerHTML=shipments[id]||"Not found";
-}
-
-/* COUNTRY DATA */
-const data={
-Egypt:"Main hub in Cairo",
-France:"European distribution",
-Italy:"Shipping hub",
-Canada:"Delivery network",
-Germany:"Logistics hub",
-UAE:"Middle East operations",
-China:"Manufacturing",
-India:"Regional hub"
-};
-
-function show(c){
-document.getElementById("info").innerHTML=data[c];
 }
 </script>
 
