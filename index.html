@@ -9,7 +9,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:Poppins;background:#f4f6f9;}
+body{font-family:Poppins;background:#f5f7fa;}
 
 /* HEADER */
 header{
@@ -20,32 +20,30 @@ header{
   padding:15px 40px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
   z-index:1000;
   border-bottom:3px solid gold;
 }
 nav a{
   margin-left:20px;
-  color:white;
   cursor:pointer;
 }
 
-/* HERO SLIDER */
+/* HERO */
 .hero{
   height:100vh;
   position:relative;
   overflow:hidden;
   display:flex;
   align-items:center;
-  padding:0 50px;
+  padding:0 60px;
   color:white;
 }
+
 .slide{
   position:absolute;
   width:100%;
   height:100%;
   background-size:cover;
-  background-position:center;
   opacity:0;
   transition:1.5s;
 }
@@ -63,7 +61,7 @@ nav a{
   z-index:2;
 }
 
-/* SECTIONS */
+/* SECTION */
 .section{display:none;padding:100px 40px;}
 .active{display:block;}
 
@@ -77,30 +75,41 @@ nav a{
   background:white;
   padding:20px;
   text-align:center;
-  cursor:pointer;
+  border-radius:10px;
 }
 
 /* MAP */
 .map{
-  height:300px;
+  height:350px;
   background:url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
   background-size:cover;
   position:relative;
 }
+
+/* ROUTE */
+.route{
+  position:absolute;
+  width:200px;
+  height:2px;
+  background:gold;
+  top:60%;
+  left:30%;
+}
+
 .dot{
   width:12px;
   height:12px;
   background:red;
   border-radius:50%;
   position:absolute;
-  animation:move 5s infinite linear;
+  animation:move 6s infinite linear;
 }
+
 @keyframes move{
-  0%{left:20%;top:60%;}
+  0%{left:30%;top:60%;}
   100%{left:60%;top:40%;}
 }
 
-/* BUTTON */
 button{padding:10px;background:gold;border:none;}
 </style>
 </head>
@@ -108,7 +117,7 @@ button{padding:10px;background:gold;border:none;}
 <body>
 
 <header>
-<h3>🌍 Smart Supply Chain</h3>
+<h3>🪷 Smart Supply Chain</h3>
 <nav>
 <a onclick="show('home')">Home</a>
 <a onclick="show('countries')">Countries</a>
@@ -131,12 +140,11 @@ button{padding:10px;background:gold;border:none;}
 <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1572252009286-268acec5ca0a')"></div>
 <div class="slide" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Tutankhamun_Mask.jpg')"></div>
 <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1590005354167-6da97870c757')"></div>
-<div class="slide" style="background-image:url('https://images.unsplash.com/photo-1548013146-72479768bada')"></div>
 
 <div class="overlay"></div>
 
 <div class="hero-content">
-<h1 id="title">Egyptian Global Logistics</h1>
+<h1 id="title">Egyptian Logistics Network</h1>
 
 <input id="trackInput" placeholder="Tracking Number">
 <button onclick="track()">Track</button>
@@ -151,10 +159,10 @@ button{padding:10px;background:gold;border:none;}
 <h2>Countries</h2>
 
 <div class="grid">
-<div class="card" onclick="openCountry('Egypt')">🇪🇬 Egypt</div>
-<div class="card" onclick="openCountry('France')">🇫🇷 France</div>
-<div class="card" onclick="openCountry('Italy')">🇮🇹 Italy</div>
-<div class="card" onclick="openCountry('Canada')">🇨🇦 Canada</div>
+<div class="card">🇪🇬 Egypt</div>
+<div class="card">🇫🇷 France</div>
+<div class="card">🇮🇹 Italy</div>
+<div class="card">🇨🇦 Canada</div>
 <div class="card">🇩🇪 Germany</div>
 <div class="card">🇦🇪 UAE</div>
 <div class="card">🇨🇳 China</div>
@@ -165,11 +173,12 @@ button{padding:10px;background:gold;border:none;}
 
 <!-- SHIPPING -->
 <section id="shipping" class="section">
-<h2>Shipping</h2>
+<h2>Shipping Routes</h2>
 
 <p>🚢 Sea Transport | ✈️ Air Transport</p>
 
 <div class="map">
+<div class="route"></div>
 <div class="dot"></div>
 </div>
 
@@ -179,8 +188,8 @@ button{padding:10px;background:gold;border:none;}
 <section id="tracking" class="section">
 <h2>Tracking</h2>
 
-<p>1234: Canada → France (3 days)</p>
-<p>2222: Austria → UK (2 days)</p>
+<p>1234: Canada → France (3 days, Sea)</p>
+<p>2222: Austria → UK (2 days, Air)</p>
 
 <div class="map">
 <div class="dot"></div>
@@ -192,11 +201,11 @@ button{padding:10px;background:gold;border:none;}
 <section id="contact" class="section">
 <h2>Contact</h2>
 
-<p>📞 012******* </p>
+<p>📞 012*******</p>
 <p>📧 supplychain@*****</p>
 <p>Response within 24 hours</p>
 
-<textarea placeholder="Your complaint"></textarea><br><br>
+<textarea placeholder="Complaint"></textarea><br><br>
 <button>Send</button>
 
 </section>
@@ -237,12 +246,12 @@ i=(i+1)%slides.length;
 slides[i].classList.add("active");
 },4000);
 
-/* LANGUAGE */
+/* LANG */
 function lang(l){
 if(l=="AR") title.innerHTML="الخدمات اللوجستية المصرية";
 if(l=="FR") title.innerHTML="Logistique Égyptienne";
 if(l=="IT") title.innerHTML="Logistica Egiziana";
-if(l=="EN") title.innerHTML="Egyptian Global Logistics";
+if(l=="EN") title.innerHTML="Egyptian Logistics Network";
 }
 </script>
 
