@@ -1,56 +1,176 @@
-<div id="about" class="page section">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Supply Chain</title>
 
-<h1>About Smart Supply Chain</h1>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial}
 
-<p>
-Smart Supply Chain is a modern logistics platform designed to simulate global shipment tracking and supply chain operations. 
-The platform connects different countries through an interactive system that demonstrates how goods move efficiently across international markets.
-</p>
+/* HEADER */
+header{
+background:#0B1F3A;
+color:white;
+padding:15px 40px;
+display:flex;
+justify-content:space-between;
+}
 
-<h2>Purpose & Objectives</h2>
-<p>
-The main purpose of this website is to provide a clear and simplified view of how supply chain systems operate globally. 
-It aims to help users understand shipment tracking, warehouse distribution, and transportation methods while delivering a smooth and user-friendly experience.
-</p>
+nav a{
+margin-left:20px;
+cursor:pointer;
+}
 
-<h2>Target Audience</h2>
-<p>
-This platform is designed for students, logistics professionals, and e-commerce businesses interested in understanding supply chain operations. 
-It is also suitable for anyone who wants to explore how international shipping systems function in real-world scenarios.
-</p>
+/* PAGE SYSTEM */
+.page{display:none}
+.active{display:block}
 
-<h2>Platform Features</h2>
-<ul>
-<li>Interactive shipment tracking system</li>
-<li>Country-based logistics and warehouse navigation</li>
-<li>Air and sea freight shipping simulation</li>
-<li>Simple and intuitive user interface</li>
-<li>Responsive layout for different devices</li>
-</ul>
+/* TRACKING PAGE */
+.tracking{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
 
-<h2>Technology & Tools</h2>
-<p>
-The website is developed using HTML, CSS, and JavaScript to create a lightweight and fast user experience. 
-It is hosted on GitHub Pages, making it easily accessible without the need for backend infrastructure.
-</p>
+background:
+linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
 
-<h2>User Experience & Design</h2>
-<p>
-The design follows a clean corporate style inspired by global logistics companies. 
-A dark blue color palette represents trust and professionalism, while gold accents reflect a premium identity. 
-The layout is structured to ensure easy navigation and accessibility across all devices.
-</p>
+background-size:cover;
+}
 
-<h2>Development Challenges</h2>
-<p>
-During development, several challenges were encountered, including navigation structure, deployment issues, and layout consistency. 
-These were resolved by implementing JavaScript-based page navigation, properly configuring GitHub Pages, and improving the visual hierarchy of the interface.
-</p>
+.track-box{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
 
-<h2>Conclusion & Future Improvements</h2>
-<p>
-This project demonstrates a simplified but effective model of a global supply chain system. 
-Future enhancements may include real-time tracking, database integration, and interactive map technologies to further improve functionality and realism.
-</p>
+.track-box input{
+padding:12px;
+width:250px;
+}
+
+.track-box button{
+padding:12px;
+background:gold;
+border:none;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:40px;
+}
+
+.card{
+background:#eee;
+padding:20px;
+cursor:pointer;
+text-align:center;
+}
+
+/* SECTION */
+.section{
+padding:50px;
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h3>Smart Supply Chain</h3>
+
+<nav>
+<a onclick="showPage('home')">Home</a>
+<a onclick="showPage('countries')">Countries</a>
+<a onclick="showPage('warehouse')">Warehouse</a>
+<a onclick="showPage('shipping')">Shipping</a>
+</nav>
+</header>
+
+<!-- HOME = TRACKING -->
+<div id="home" class="page tracking active">
+
+<h1>Track Your Shipment</h1>
+
+<div class="track-box">
+<input id="trackInput" placeholder="Enter Tracking Number">
+<button onclick="track()">Track</button>
+</div>
+
+<div id="result"></div>
 
 </div>
+
+<!-- COUNTRIES PAGE -->
+<div id="countries" class="page section">
+<h2>Countries</h2>
+
+<div class="grid">
+<div class="card" onclick="openCountry('Egypt')">🇪🇬 Egypt</div>
+<div class="card" onclick="openCountry('France')">🇫🇷 France</div>
+<div class="card" onclick="openCountry('Italy')">🇮🇹 Italy</div>
+<div class="card" onclick="openCountry('Canada')">🇨🇦 Canada</div>
+<div class="card" onclick="openCountry('Germany')">🇩🇪 Germany</div>
+<div class="card" onclick="openCountry('USA')">🇺🇸 USA</div>
+</div>
+</div>
+
+<!-- WAREHOUSE PAGE -->
+<div id="warehouse" class="page section">
+<h2 id="countryName">Warehouse</h2>
+<p>Warehouse near airport & seaport</p>
+</div>
+
+<!-- SHIPPING PAGE -->
+<div id="shipping" class="page section">
+<h2>Shipping Methods</h2>
+
+<div class="grid">
+<div class="card">🚢 Sea Freight</div>
+<div class="card">✈️ Air Freight</div>
+</div>
+</div>
+
+<script>
+
+/* NAVIGATION */
+function showPage(page){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(page).classList.add('active');
+}
+
+/* TRACKING */
+function track(){
+let id=document.getElementById("trackInput").value;
+
+if(id=="1234"){
+result.innerHTML="🚢 Canada → France (3 days)";
+}
+else if(id=="2222"){
+result.innerHTML="✈️ Austria → UK (2 days)";
+}
+else{
+result.innerHTML="Not found";
+}
+}
+
+/* OPEN COUNTRY */
+function openCountry(name){
+showPage('warehouse');
+document.getElementById("countryName").innerText = name + " Warehouse";
+}
+
+</script>
+
+</body>
+</html>
