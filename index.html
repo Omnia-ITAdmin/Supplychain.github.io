@@ -8,28 +8,59 @@
 <style>
 body{font-family:Arial;background:#f4f6f9;margin:0}
 header{background:#0B1F3A;color:white;padding:15px;text-align:center}
+
 .section{padding:30px;text-align:center}
 
+/* FORM */
 .form{
 background:white;padding:20px;border-radius:10px;
 max-width:400px;margin:auto;
 box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
-input,select{width:100%;padding:10px;margin:10px 0}
-
-button{padding:10px;background:gold;border:none;cursor:pointer}
-
-#result{
-margin-top:20px;background:white;padding:15px;border-radius:10px;
+input,select{
+width:100%;padding:10px;margin:10px 0;
 }
 
-.timeline{margin-top:20px;text-align:left;max-width:500px;margin:auto}
-.step{padding:10px;border-left:4px solid #0B1F3A;margin-bottom:10px;background:#fff}
+button{
+padding:10px;background:gold;border:none;cursor:pointer;
+}
 
+/* RESULT */
+#result{
+margin-top:20px;
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 5px 10px rgba(0,0,0,0.1);
+text-align:left;
+}
+
+#result hr{
+margin:10px 0;
+border:0;
+height:1px;
+background:#ddd;
+}
+
+/* TIMELINE */
+.timeline{
+margin-top:20px;text-align:left;max-width:600px;margin:auto;
+}
+.step{
+padding:12px;
+border-left:5px solid #0B1F3A;
+margin-bottom:10px;
+background:#fff;
+border-radius:5px;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* MAP */
 .map{
 position:relative;height:300px;margin-top:20px;
 background:url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
 background-size:cover;
+border-radius:10px;
 }
 .dot{
 width:14px;height:14px;background:red;border-radius:50%;
@@ -46,15 +77,15 @@ position:absolute;transition:4s linear;
 
 <div class="section">
 
-<h3>iPhone Shipment Calculator</h3>
+<h3>📱 iPhone Shipment System</h3>
 
 <div class="form">
 
 <input id="qty" type="number" placeholder="Number of iPhones">
 
 <select id="shippingType">
-<option value="air">✈️ Air</option>
-<option value="sea">🚢 Sea</option>
+<option value="air">✈️ Air Freight</option>
+<option value="sea">🚢 Sea Freight</option>
 </select>
 
 <select id="from">
@@ -69,7 +100,7 @@ position:absolute;transition:4s linear;
 <option>Germany</option>
 </select>
 
-<input id="email" placeholder="Email">
+<input id="email" placeholder="Enter Email">
 
 <button onclick="calculate()">Calculate Shipment</button>
 
@@ -86,7 +117,7 @@ position:absolute;transition:4s linear;
 
 <script>
 
-/* DATA */
+/* LOCATIONS */
 const locations={
 China:{x:20,y:50},
 Egypt:{x:30,y:65},
@@ -103,7 +134,7 @@ let dy=a.y-b.y;
 return Math.sqrt(dx*dx+dy*dy)*100;
 }
 
-/* MAIN */
+/* MAIN FUNCTION */
 function calculate(){
 
 let qty=parseInt(document.getElementById("qty").value);
@@ -111,62 +142,82 @@ let type=document.getElementById("shippingType").value;
 let from=document.getElementById("from").value;
 let to=document.getElementById("to").value;
 let email=document.getElementById("email").value;
+let resultBox=document.getElementById("result");
 
+/* VALIDATION */
 if(!qty || qty<=0){
-result.innerHTML="❌ Enter valid quantity";
+resultBox.innerHTML="❌ Enter valid quantity";
+return;
+}
+if(!email.includes("@")){
+resultBox.innerHTML="❌ Enter valid email";
 return;
 }
 
-/* 📦 Weight */
+/* WEIGHT */
 let weight=qty*0.2;
 
-/* 📦 Volumetric Weight */
+/* VOLUMETRIC */
 let volumetric=qty*0.3;
-
-/* use higher */
 let finalWeight=Math.max(weight,volumetric);
 
-/* 💰 Base Cost */
-let cost=finalWeight*60;
+/* COST */
+let baseCost=finalWeight*60;
 
-/* ✈️ Air / 🚢 Sea */
+/* SHIPPING TYPE */
 let days;
 if(type==="air"){
-cost*=1.5;
+baseCost*=1.5;
 days=3+Math.ceil(dist(locations[from],locations[to])/30);
 }else{
-cost*=1;
 days=20+Math.ceil(dist(locations[from],locations[to])/15);
 }
 
-/* 🛃 Customs */
-let customs=cost*0.1;
+/* CUSTOMS */
+let customs=baseCost*0.1;
+let total=baseCost+customs;
 
-/* 💰 Total */
-let total=cost+customs;
-
-/* RESULT */
-result.innerHTML=
-`📱 iPhone Shipment<br>
-📦 Qty: ${qty}<br>
+/* RESULT FULL SUMMARY */
+resultBox.innerHTML = `
+📱 <b>Product:</b> iPhone<br>
+📦 Route: ${from} → ${to}<br>
 ⚖ Weight: ${finalWeight.toFixed(1)} kg<br>
-🚚 Type: ${type}<br>
-⏱ Delivery: ${days} days<br>
-🛃 Customs: $${customs.toFixed(0)}<br>
-💰 Total Cost: $${total.toFixed(0)}<br>
-📧 Sent to: ${email}`;
 
-/* TIMELINE */
-timeline.innerHTML=
-`
-<div class="step">🏭 Production Complete</div>
-<div class="step">📦 Warehouse (48h)</div>
-<div class="step">${type==="air"?"✈️ Air Shipping":"🚢 Sea Shipping"}</div>
-<div class="step">🛃 Customs Clearance</div>
-<div class="step">🚚 Delivery</div>
+<hr>
+
+🧠 <b>Production Timeline</b><br>
+• R&D: 6–12 Months<br>
+• Components: 2–4 Months<br>
+• Assembly (Foxconn / Pegatron): 2–6 Weeks<br>
+• Quality & Packaging: 1–2 Weeks<br>
+
+<hr>
+
+🚚 <b>Shipping Timeline</b><br>
+• Supplier → Warehouse: ≤48h<br>
+• ${type==="air" ? "✈️ Air Freight: 2–7 Days" : "🚢 Sea Freight: 20–40 Days"}<br>
+• Customs Clearance: 1–7 Days<br>
+• Local Distribution: 2–5 Days<br>
+• Final Delivery: 3 Days<br>
+
+<hr>
+
+⏱ <b>Total Time:</b> ${days} days + Production<br>
+💰 <b>Total Cost:</b> $${total.toFixed(0)}<br>
+📧 <b>Tracking sent to:</b> ${email}
 `;
 
-/* MAP */
+/* TIMELINE (VISUAL) */
+document.getElementById("timeline").innerHTML=
+`
+<div class="step">🏭 Production Completed</div>
+<div class="step">📦 Packed in ${from}</div>
+<div class="step">${type==="air"?"✈️ Air Shipping":"🚢 Sea Shipping"}</div>
+<div class="step">🛃 Customs Clearance</div>
+<div class="step">🚚 Delivery to Customer (${to})</div>
+`;
+
+/* MAP ANIMATION */
 let dot=document.getElementById("dot");
 let start=locations[from];
 let end=locations[to];
