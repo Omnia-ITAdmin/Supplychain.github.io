@@ -2,55 +2,90 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Global Supply Chain Tracker</title>
+<title>Supply Chain Tracker</title>
 
 <style>
-body { font-family: Arial; margin:0; background:#f4f4f4; }
-header { background:black; color:white; padding:15px; text-align:center; }
-nav { background:#333; padding:10px; text-align:center; }
-nav a { color:white; margin:10px; text-decoration:none; }
-
-section { padding:20px; }
-
-.card {
-    background:white;
-    padding:15px;
-    margin:10px;
-    border-radius:10px;
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin:0;
+    background:#f5f5f7;
 }
 
+/* HEADER */
+header {
+    background:#000;
+    color:#fff;
+    padding:20px;
+    text-align:center;
+}
+
+/* NAV */
+nav {
+    display:flex;
+    justify-content:center;
+    background:#111;
+}
+nav a {
+    color:#fff;
+    padding:15px 20px;
+    text-decoration:none;
+}
+nav a:hover {
+    background:#333;
+}
+
+/* HERO */
+.hero {
+    text-align:center;
+    padding:40px;
+}
+.hero h1 {
+    font-size:32px;
+}
+
+/* SECTIONS */
+section {
+    padding:30px;
+}
+
+/* GRID */
 .grid {
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px,1fr));
-    gap:10px;
+    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    gap:20px;
 }
 
-.country {
-    background:white;
-    padding:10px;
-    text-align:center;
-    cursor:pointer;
-    border-radius:10px;
-    transition:0.3s;
-}
-.country:hover { background:#ddd; }
-
-.country img {
-    width:40px;
-    height:25px;
+/* CARD */
+.card {
+    background:#fff;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
-#map { height:350px; width:100%; }
-
+/* BUTTON */
 button {
-    padding:10px;
-    background:black;
-    color:white;
+    padding:10px 15px;
     border:none;
+    background:#000;
+    color:#fff;
+    border-radius:8px;
     cursor:pointer;
 }
+button:hover { background:#333; }
 
-input { padding:10px; }
+/* INPUT */
+input {
+    padding:10px;
+    width:200px;
+    margin-right:10px;
+}
+
+/* MAP */
+#map {
+    height:350px;
+    border-radius:10px;
+}
 
 </style>
 </head>
@@ -58,111 +93,40 @@ input { padding:10px; }
 <body>
 
 <header>
-<h1>Global Supply Chain Tracker</h1>
+<h2>Global Supply Chain Tracker</h2>
 </header>
 
 <nav>
-<a href="#countries">Countries</a>
-<a href="#mapSection">Map</a>
+<a href="#home">Home</a>
 <a href="#tracking">Tracking</a>
+<a href="#mapSection">Map</a>
 </nav>
 
-<section id="countries">
-<h2>Select Country</h2>
-<div class="grid" id="countryList"></div>
+<!-- HERO -->
+<section class="hero" id="home">
+<h1>Track Shipment Worldwide</h1>
+<p>Simulating global logistics like Apple supply chain</p>
 </section>
 
+<!-- TRACKING -->
+<section id="tracking">
+<h2>Shipment Cost</h2>
+
+<input type="number" id="steps" placeholder="Enter steps">
+<button onclick="calc()">Calculate</button>
+
+<div id="result" class="card"></div>
+</section>
+
+<!-- MAP -->
 <section id="mapSection">
 <h2>Shipment Route</h2>
 <div id="map"></div>
 </section>
 
-<section id="tracking">
-<h2>Tracking</h2>
-
-<input type="number" id="steps" placeholder="Steps">
-<button onclick="calc()">Calculate Cost</button>
-
-<div id="result" class="card"></div>
-<div id="routeSteps" class="card"></div>
-
-</section>
-
 <script>
 
-// 🌍 COUNTRIES
-let countries = [
-{name:"China", lat:31.2304, lng:121.4737, flag:"https://flagcdn.com/w40/cn.png"},
-{name:"UAE", lat:25.2769, lng:55.2962, flag:"https://flagcdn.com/w40/ae.png"},
-{name:"Egypt", lat:30.0444, lng:31.2357, flag:"https://flagcdn.com/w40/eg.png"},
-{name:"USA", lat:37.7749, lng:-122.4194, flag:"https://flagcdn.com/w40/us.png"},
-{name:"Germany", lat:52.52, lng:13.405, flag:"https://flagcdn.com/w40/de.png"},
-{name:"India", lat:28.6139, lng:77.2090, flag:"https://flagcdn.com/w40/in.png"},
-{name:"Brazil", lat:-23.5505, lng:-46.6333, flag:"https://flagcdn.com/w40/br.png"},
-{name:"Japan", lat:35.6762, lng:139.6503, flag:"https://flagcdn.com/w40/jp.png"}
-];
-
-// عرض الدول
-let list = document.getElementById("countryList");
-countries.forEach((c, i) => {
-    list.innerHTML += `
-    <div class="country" onclick="selectCountry(${i})">
-        <img src="${c.flag}"><br>${c.name}
-    </div>`;
-});
-
-// 🗺️ MAP
-let map, marker, route = [], polyline;
-
-function initMap(){
-    map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 2,
-        center: {lat:20, lng:0}
-    });
-}
-
-// اختيار دولة
-function selectCountry(i){
-    let c = countries[i];
-    route.push(c);
-
-    if(!marker){
-        marker = new google.maps.Marker({position:c, map:map});
-    } else {
-        marker.setPosition(c);
-    }
-
-    map.panTo(c);
-
-    drawRoute();
-    showRoute();
-}
-
-// رسم خط بين الدول
-function drawRoute(){
-    if(polyline) polyline.setMap(null);
-
-    polyline = new google.maps.Polyline({
-        path: route,
-        geodesic: true,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-    });
-
-    polyline.setMap(map);
-}
-
-// عرض المسار
-function showRoute(){
-    let text = "<b>Route:</b><br>";
-    route.forEach((r, index) => {
-        text += (index+1) + "- " + r.name + "<br>";
-    });
-    document.getElementById("routeSteps").innerHTML = text;
-}
-
-// 💰 COST
+// COST
 function calc(){
     let n = document.getElementById("steps").value;
 
@@ -177,9 +141,28 @@ function calc(){
     "<b>Final Cost:</b> $" + cost.toFixed(2);
 }
 
+// MAP
+function initMap(){
+    let map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 3,
+        center: {lat:20, lng:0}
+    });
+
+    let route = [
+        {lat:31.2304, lng:121.4737},
+        {lat:25.2769, lng:55.2962},
+        {lat:30.0444, lng:31.2357}
+    ];
+
+    new google.maps.Polyline({
+        path: route,
+        map: map,
+        strokeColor: "#000"
+    });
+}
+
 </script>
 
-<!-- ⚠️ PUT YOUR GOOGLE API KEY -->
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
 async defer></script>
 
